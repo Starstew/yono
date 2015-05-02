@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Yono - Yonodes</title>
+<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
+<script src="../js/jquery-1.8.2.min.js"></script>
+<script src="../js/yonoData.js"></script>
+<script src="../js/articipantsPage.js"></script>
+<script src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
+
+<script language="JavaScript">
+	initArticipantsPage({"navUrl":"index.html"} );
+	var navUrlBase = "./index.html";
+	myYonoData.jsonDataLoadComplete = function() {
+		var listOfIds = myYonoData.pArrayBySubtime.reverse();
+		
+		// update report
+		var ur = $("#uchuReport");
+		ur.empty();
+		ur.append("<span class='yonodeDataLabel'>Completed Yonodes:</span><span class='yonodeData'>" + listOfIds.length + "</span>");
+		var mrYonode = myYonoData.pHash[listOfIds[0]];
+		var mrDate = new Date(mrYonode.subtime * 1000);
+		var mrDateString = mrDate.toString();
+		var mrArtistName = myYonoData.artists[mrYonode.artist].name;
+		ur.append("<br/><span class='yonodeDataLabel'>Most recent:</span><span class='yonodeData'>" +  mrDateString + " by " + mrArtistName + "</span>");
+		
+		// display all the yonodes
+		$("#allYonodes").empty();
+		
+		for (var i = 0; i < listOfIds.length; i++) {
+			var pid = listOfIds[i];
+			var yonodeObj = myYonoData.pHash[pid];
+			var artistName = myYonoData.artists[yonodeObj.artist].name;
+			var di = parseInt(yonodeObj['subtime']);
+			var d = new Date(di*1000);
+			var dLocale = (d > 0) ? d.toDateString() : "";
+	
+			var yonodeDiv = "<div class='recentYonode'><a href='" + navUrlBase + "?centerId=" + pid + "'><img title='" + artistName + " on " + dLocale + "' src='" + piecesBasePath + "2x/" + pid + ".png'></a></div>";
+			$("#allYonodes").append(yonodeDiv);
+		}
+	}
+</script>
+<style type="text/css">
+	div.recentYonode {
+		padding:2px;
+		background:#000000;
+		margin:2px;
+		display:inline-block;
+	}
+	span.yonodeData {
+		background:white;
+		padding:5px;
+		opacity:0.75;
+	}
+	span.yonodeDataLabel {
+		font-weight:bold;
+		width:150px;
+		background:grey;
+		padding:5px;
+		color:#ffffff;
+		display:inline-block;
+		opacity:0.75;
+		text-align:right;
+	}
+</style>
+</head>
+<body>
+<h2>All of the Yonodes<br/><span style="font-size:12px;">Sorted from newest to oldest</span></h2>
+<div style="padding:10px;background:#4f436e;display:inline-block;" id="uchuReport"></div>
+<div id="allYonodes"></div>
+</body>
+</html>
