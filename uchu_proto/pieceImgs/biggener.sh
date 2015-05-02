@@ -1,6 +1,10 @@
 #!/bin/sh
+# This script goes through the Yono pieces and makes 2x and 4x nearest neighbor enlargements.
+# Requires: Netpbm libs
 
-dir=/var/www/sito/web/yono/uchu_proto/pieceImgs
+# set the path to these images
+# e.g. /var/www/sito/web/yono/uchu_proto/pieceImgs
+dir=/path/to/this/yono/uchu_proto/pieceImgs
 
 for i in $dir/*png ; do
 	f=`basename $i`

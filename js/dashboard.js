@@ -1,8 +1,8 @@
 var jsonObj = new Object();
 var jsonUrl = "uchuData.json";
 var imgsUrl = "./pieceImgs/";
-var navUrl = "./";
-var articipantsUrl = "articipants.html";
+var navUrl = "./index.html";
+var articipantsUrl = "./articipants.html";
 
 
 function initDashboard(iobj) {
@@ -19,12 +19,11 @@ function initDashboard(iobj) {
 	}
 	
 	$.getJSON(jsonUrl, function(json) {
-	console.log("gotJson");
-    jsonObj = json;
-    
-    buildPiecesList();
-	buildArtistsList();
-});
+	    jsonObj = json;
+	    
+	    buildPiecesList();
+		buildArtistsList();
+	});
 }
 
 function buildArtistsList() {
