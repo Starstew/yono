@@ -64,16 +64,16 @@ myYonoData.jsonDataLoadComplete = function() {
 	iobj["basePieceSize"] = 64;
 	iobj["yonoData"] = this;
 	iobj["isGridSizeLocked"] = true;
-	init(iobj);
+	yono.init(iobj);
 }
 
 function togglePixFx() {
-	isShowingPixelEdgeEffects = !isShowingPixelEdgeEffects;
-	var border = (isShowingPixelEdgeEffects) ? "1px solid #000000" : "0px solid #000000";
-	var margin = (isShowingPixelEdgeEffects) ? "0px" : "1px";
+	var is = yono.displayTogglePixelEdgeFx();
+	var border = (is) ? "1px solid #000000" : "0px solid #000000";
+	var margin = (is) ? "0px" : "1px";
 	$("#toggleGrid").css("border",border);
 	$("#toggleGrid").css("margin",margin);
-	showYonograph();
+	yono.showYonograph();
 }
 
 function toggleAnimation() {
@@ -82,7 +82,7 @@ function toggleAnimation() {
 	var margin = (isAnimationEnabled) ? "0px" : "1px";
 	$("#toggleAni").css("border",border);
 	$("#toggleAni").css("margin",margin);
-	showYonograph();
+	yono.showYonograph();
 }
 </script>
 
@@ -92,13 +92,9 @@ function toggleAnimation() {
 
 <h1>Yono Navigator</h1>
 <div id="pieceInfo" style="float:left;margin-right:1px;white-space:nowrap;"></div>
-<div id="size_1" class="fsdiv" style="background:#eeeeee;"><a href="javascript:void(0)" onClick="quadSize=32;showYonograph();">1x</a></div>
-<div id="size_2" class="fsdiv" style="background:#d5d5d5;"><a href="javascript:void(0)" onClick="quadSize=64;showYonograph();">2x</a></div>
-<div id="size_3" class="fsdiv" style="background:#cccccc;"><a href="javascript:void(0)" onClick="quadSize=128;showYonograph();">4x</a></div>
-<!--
-<div id="navButtons" class="fsdiv"></div>
-<div class="fsdiv" id="yonostats"></div>
--->
+<div id="size_1" class="fsdiv" style="background:#eeeeee;"><a href="javascript:void(0)" onClick="yono.displayChangeSize(32);">1x</a></div>
+<div id="size_2" class="fsdiv" style="background:#d5d5d5;"><a href="javascript:void(0)" onClick="yono.displayChangeSize(64);">2x</a></div>
+<div id="size_3" class="fsdiv" style="background:#cccccc;"><a href="javascript:void(0)" onClick="yono.displayChangeSize(128);">4x</a></div>
 
 <div id="toggleGrid" class="fsdiv" style="background:#eeeeee;margin:1px;"><a href="javascript:void(0)" title="Toggle Grid Effect" onClick="togglePixFx();">Grid</a></div>
 <div id="toggleAni" class="fsdiv" style="background:#eeeeee;border:1px solid #000000;margin:0px;"><a href="javascript:void(0)" title="Toggle Animation on Expand/Collapse" onClick="toggleAnimation();">Animation</a></div>
