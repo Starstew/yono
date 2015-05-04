@@ -7,8 +7,8 @@
 <script src="../js/jquery.easing.1.3.js"></script>
 <script src="../js/jquery-ui-1.9.0.custom.min.js"></script>
 <script src="../js/purl.js"></script>
-<script src="../js/yonoData.js"></script>
-<script src="../js/yonoNav.js"></script>
+<script src="../js/yono.js"></script>
+<script src="../js/yono.data.js"></script>
 <script src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
 
 <LINK href="../css/yono.css" rel="stylesheet" type="text/css">
@@ -48,22 +48,19 @@
 </style>
 
 <script language="JavaScript">
-var myYonoData = new yonoData();
-
 $(function () {
-	myYonoData.init({"jsonData":uchuDataJson}); // for local environment
-	// myYonoData.init({"jsonPath":"uchuData.json"}); // for server environment
+	yono.data.init({"jsonData":uchuDataJson}); // for local environment
+	// yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
 	$("#yonograph").resizable({stop:function(){centerTheGrid();}});
 	$("#crawlInfo").draggable();
-	//$("#crawlInfo").css("display","block"); 
 });
 
-myYonoData.jsonDataLoadComplete = function() {
-	// now use yonoNav.js to init/display a yonograph
-	var iobj = new Object();
-	iobj["basePieceSize"] = 64;
-	iobj["yonoData"] = this;
-	iobj["isGridSizeLocked"] = true;
+yono.data.jsonDataLoadComplete = function() {
+	var iobj = {
+		basePieceSize: 64,
+		uchuData: this,
+		isGridSizeLocked: true
+	}
 	yono.init(iobj);
 }
 
@@ -99,7 +96,6 @@ function toggleAnimation() {
 <div id="toggleGrid" class="fsdiv" style="background:#eeeeee;margin:1px;"><a href="javascript:void(0)" title="Toggle Grid Effect" onClick="togglePixFx();">Grid</a></div>
 <div id="toggleAni" class="fsdiv" style="background:#eeeeee;border:1px solid #000000;margin:0px;"><a href="javascript:void(0)" title="Toggle Animation on Expand/Collapse" onClick="toggleAnimation();">Animation</a></div>
  
-
 <!-- YONOGRAPH -->
 <div id="yonograph" style="clear:both;border:1px solid white;margin:0px;width:100%;height:600px;background:#ffffff;overflow:hidden;background:#111;">
 <div id="grid"></div>
@@ -108,7 +104,6 @@ function toggleAnimation() {
 </p>
 
 <br style="clear:both;"/>
-
 
 How to use this navigator:
 <ul>
@@ -120,12 +115,7 @@ How to use this navigator:
 
 <p/>
 
-
 <div id="crawlInfo" style="opacity:0.8;background:black;width:200px;padding:10px;border:2px solid grey;display:none;color:white;"></div>
 </body>
 
 </html>
-
-
-
-

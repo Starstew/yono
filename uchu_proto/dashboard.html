@@ -3,18 +3,18 @@
 <title>Yono - Articipants' Reference</title>
 <LINK href="../css/yono.css" rel="stylesheet" type="text/css">
 <script src="../js/jquery-1.8.2.min.js"></script>
-<script src="../js/yonoData.js"></script>
+<script src="../js/yono.js"></script>
+<script src="../js/yono.data.js"></script>
 <script src="../js/dashboard.js"></script>
 <script src="uchuDataJsonAs.js"></script> <!-- for local testing, load JSON object in JS -->
 
 <script language="JavaScript">
-	var myYonoData = new yonoData();
 	$(function() {
-		myYonoData.init({"jsonData":uchuDataJson}); // for local environment
-		// myYonoData.init({"jsonPath":"uchuData.json"}); // for server environment
+		yono.data.init({"jsonData":uchuDataJson}); // for local environment
+		// yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
 	});
-	myYonoData.jsonDataLoadComplete = function() {
-		jsonObj = myYonoData.jsonObj;
+	yono.data.jsonDataLoadComplete = function() {
+		jsonObj = yono.data.jsonObj;
 	    buildPiecesList();
 		buildArtistsList();
 	}

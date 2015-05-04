@@ -3,41 +3,22 @@
 <title>Yono - Yonodes</title>
 <LINK href="../css/yono.css" rel="stylesheet" type="text/css">
 <script src="../js/jquery-1.8.2.min.js"></script>
-<script src="../js/yonoData.js"></script>
-<script src="../js/articipantsPage.js"></script>
+<script src="../js/yono.js"></script>
+<script src="../js/yono.data.js"></script>
+<script src="../js/yono.page.articipants.js"></script>
 <script src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
 
 <script language="JavaScript">
-	initArticipantsPage({"navUrl":"index.html"} );
-	var navUrlBase = "./index.html";
-	myYonoData.jsonDataLoadComplete = function() {
-		var listOfIds = myYonoData.pArrayBySubtime.reverse();
-		
-		// update report
-		var ur = $("#uchuReport");
-		ur.empty();
-		ur.append("<span class='yonodeDataLabel'>Completed Yonodes:</span><span class='yonodeData'>" + listOfIds.length + "</span>");
-		var mrYonode = myYonoData.pHash[listOfIds[0]];
-		var mrDate = new Date(mrYonode.subtime * 1000);
-		var mrDateString = mrDate.toString();
-		var mrArtistName = myYonoData.artists[mrYonode.artist].name;
-		ur.append("<br/><span class='yonodeDataLabel'>Most recent:</span><span class='yonodeData'>" +  mrDateString + " by " + mrArtistName + "</span>");
-		
-		// display all the yonodes
-		$("#allYonodes").empty();
-		
-		for (var i = 0; i < listOfIds.length; i++) {
-			var pid = listOfIds[i];
-			var yonodeObj = myYonoData.pHash[pid];
-			var artistName = myYonoData.artists[yonodeObj.artist].name;
-			var di = parseInt(yonodeObj['subtime']);
-			var d = new Date(di*1000);
-			var dLocale = (d > 0) ? d.toDateString() : "";
-	
-			var yonodeDiv = "<div class='recentYonode'><a href='" + navUrlBase + "?centerId=" + pid + "'><img title='" + artistName + " on " + dLocale + "' src='" + piecesBasePath + "2x/" + pid + ".png'></a></div>";
-			$("#allYonodes").append(yonodeDiv);
-		}
+	yono.data.jsonDataLoadComplete = function() {
+		yono.page.articipants.showUchuReport('#uchuReport');
+		yono.page.articipants.showAllYonodes('#allYonodes');
 	}
+	$(function(){
+		yono.page.articipants.initPage({"navUrl":"index.html"} );
+		var navUrlBase = "./index.html";
+		yono.data.init({"jsonData":uchuDataJson}); // for local environment
+		//yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
+	});
 </script>
 <style type="text/css">
 	div.recentYonode {

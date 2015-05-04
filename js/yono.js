@@ -70,8 +70,8 @@ var yono = (function(){
 				this.updateMaxDepths();
 			}
 
-			if (iobj.hasOwnProperty("yonoData")) {
-				myYonoData = iobj.yonoData;
+			if (iobj.hasOwnProperty("uchuData")) {
+				myYonoData = iobj.uchuData;
 				pHash = myYonoData.pHash;
 				artists = myYonoData.artists;
 				artistCount = myYonoData.artistCount;

@@ -1,21 +1,19 @@
-function yonoData() {
-	this.jsonObj = new Object();
-	this.jsonPath = "manual.json";
+yono.data = (function(){
+	var exports = {},
+		jsonObj = {},
+		jsonPath = "",
+		pHash, // hash of pieces
+		pArray, // array of pieces objects
+		pArrayBySubtime, // array of pieces IDs, sorted by submission time
+		artists, // artist data
+		artistsArray, // array of artist data
+		artistCount; // tally of all artists
 
-	this.pHash; // hash of pieces
-	this.pArray; // array of pieces objects
-	this.pArrayBySubtime; // array of pieces *IDs*, sorted by subtime
-	
-	this.artists; // object full of artist data
-	this.artistsArray; // array of artist data
-	this.artistCount; // tally of all artists
-	
 	/**
 	The iobj (init object) contains configuration elements. 
 	If not overridden, there will be defaults.
 	*/
-
-	this.init = function (iobj) {
+	var init = function(iobj) {
 		if (iobj) {
 			if (iobj.jsonData) {
 				this.processJson(iobj.jsonData);
@@ -26,14 +24,14 @@ function yonoData() {
 		}
 	
 		this.loadJsonData();
-	}
-	
-	this.loadJsonData = function () {
+	};
+
+	var loadJsonData = function () {
 		var self = this;
 		$.getJSON(this.jsonPath, function(json) {self.processJson(json);});
-	}
-	
-	this.processJson = function(json) {
+	};
+
+	var processJson = function(json) {
 		this.jsonObj = json;
 		
 		this.readArtistsFromJson(); 
@@ -44,28 +42,28 @@ function yonoData() {
 		this.generateArtistMetaData();
 		
 		this.jsonDataLoadComplete();
-	}
-	
+	};
+
 	// stub for overriding
-	this.jsonDataLoadComplete = function () {}
+	var jsonDataLoadComplete = function () {};
 	
-	this.generatePiecesList = function() {
+	var generatePiecesList = function() {
 		this.pHash = new Object();
 		this.buildPiecesHash();
 		this.pArray = this.buildPiecesArray();
 		this.pArrayBySubtime= this.getPiecesSortedBySubtime();
-	}
+	};
 	
-	this.readArtistsFromJson = function() {
+	var readArtistsFromJson = function() {
 		this.artists = this.jsonObj["artistTable"];
 		this.artistsArray = new Array();
 		for (var i in this.artists) {
 			this.artists[i]['id'] = i;
 			this.artistsArray.push(this.artists[i]);
 		}
-	}
+	};
 	
-	this.buildPiecesArray = function() {
+	var buildPiecesArray = function() {
 		if (this.pHash == undefined || this.pHash == null) {
 			return;
 		}
@@ -76,9 +74,9 @@ function yonoData() {
 		}
 		
 		return retArray;
-	}
-	
-	this.buildPiecesHash = function() {
+	};
+
+	var buildPiecesHash = function() {
 		var raws = this.jsonObj["piecesRaw"];
 		
 		// build a hash of pieces by looping through raw data
@@ -96,9 +94,9 @@ function yonoData() {
 		}
 		
 		this.piecesCount = raws.length;
-	}
+	};
 	
-	this.buildPieceObj = function(pObj) {
+	var buildPieceObj = function(pObj) {
 		var rp = pObj;
 		var id = rp["id"];
 		var art = rp["artist"];
@@ -130,9 +128,9 @@ function yonoData() {
 		} else {
 			this.pHash[pid]["vert"] = id;
 		}
-	}
+	};
 	
-	this.createEmptyPieceObj = function() {
+	var createEmptyPieceObj = function() {
 		var p = new Object();
 		p["horz"] = "";
 		p["vert"] = "";
@@ -142,9 +140,9 @@ function yonoData() {
 		p["parent"] = "";
 		p["seen"] = Boolean.FALSE;
 		return p;
-	}
-	
-	this.generateArtistMetaData = function() {
+	};
+
+	var generateArtistMetaData = function() {
 		// count pieces per artist
 		for (var p in this.pHash) {
 			var cpc = this.pHash[p];
@@ -158,9 +156,9 @@ function yonoData() {
 				}
 			}
 		}
-	}
+	};
 	
-	this.getPiecesSortedBySubtime = function() {
+	var getPiecesSortedBySubtime = function() {
 		var a = this.pArray.slice(0);
 		a.sort(this.sortBySubtime);
 		var b = new Array();
@@ -170,25 +168,49 @@ function yonoData() {
 			}
 		}
 		return b;
-	}
+	};
 	
 	// helpers
-	this.sortByName = function(a, b) {
+	var sortByName = function(a, b) {
 		var prop = "name";
 		var aP = (a == undefined) ? "" : a[prop].toLowerCase();
 	  	var bP = (b == undefined) ? "" : b[prop].toLowerCase();
 	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
-	}
-	this.sortByFinishedPieces = function(a, b) {
+	};
+	var sortByFinishedPieces = function(a, b) {
 		var prop = "finishedPieces";
 		var aP = (a == undefined || a[prop] == undefined) ? 0 : a[prop].length;
 	  	var bP = (b == undefined || b[prop] == undefined) ? 0 : b[prop].length;
 	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
-	}
-	this.sortBySubtime = function(a, b) {
+	};
+	var sortBySubtime = function(a, b) {
 		var prop = "subtime";
 		var aP = (a == undefined || a[prop] == undefined) ? 0 : parseInt(a[prop]);
 	  	var bP = (b == undefined || b[prop] == undefined) ? 0 : parseInt(b[prop]);
 	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
-	}
-}
+	};
+
+	exports = {
+		artists: artists,
+		pHash: pHash,
+		pArrayBySubtime: pArrayBySubtime,
+		artistsArray: artistsArray,
+		init: init,
+		loadJsonData: loadJsonData,
+		processJson: processJson,
+		jsonDataLoadComplete: jsonDataLoadComplete,
+		generatePiecesList: generatePiecesList,
+		readArtistsFromJson: readArtistsFromJson,
+		buildPiecesArray: buildPiecesArray,
+		buildPiecesHash: buildPiecesHash,
+		buildPieceObj: buildPieceObj,
+		createEmptyPieceObj: createEmptyPieceObj,
+		generateArtistMetaData: generateArtistMetaData,
+		getPiecesSortedBySubtime: getPiecesSortedBySubtime,
+		sortByName: sortByName,
+		sortByFinishedPieces: sortByFinishedPieces,
+		sortBySubtime: sortBySubtime
+	};
+
+	return exports;
+}());
