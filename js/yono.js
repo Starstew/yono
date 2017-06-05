@@ -1,6 +1,6 @@
 var yono = (function(){
 	// private vars
-	var exports = {},
+	var p = {},
 		pHash,
 		artists,
 		myYonoData,
@@ -41,7 +41,7 @@ var yono = (function(){
 
 		lastKeyCode,
 		isArrowExpanding = true,
-		
+
 		isQuadClicked = false;
 
 	/**
@@ -50,7 +50,7 @@ var yono = (function(){
 	- data
 	- parameters
 	*/
-	exports.init = function(iobj) {
+	p.init = function(iobj) {
 		if (iobj) {
 			if (iobj.hasOwnProperty("basePieceSize")) {
 				basePieceSize = parseInt(iobj.basePieceSize);
@@ -89,7 +89,7 @@ var yono = (function(){
 		}
 	};
 
-	exports.setKeyEventHandlers = function() {
+	p.setKeyEventHandlers = function() {
 		var self = this;
 		$('body').keyup(function(e) {
 	  		var kcode = e.keyCode;
@@ -183,7 +183,7 @@ var yono = (function(){
 		});
 	};
 
-	exports.showYonograph = function(centerId, navType, collapseDir) {
+	p.showYonograph = function(centerId, navType, collapseDir) {
 		centerId = this.getValidCenterId(centerId);
 		if (isGridSizeLocked === false) {
 			$("#yonograph").css("height",yonographDefaultHeight); // reset height of holder
@@ -193,7 +193,7 @@ var yono = (function(){
 		this.makeTheGrid(centerId,navType,collapseDir);
 	};
 
-	exports.makeTheGrid = function(centerId, navType, collapseDir) {
+	p.makeTheGrid = function(centerId, navType, collapseDir) {
 		// make the grid
 		var grid = new Array();
 		var hd = 0; // horizontal depth
@@ -492,18 +492,18 @@ var yono = (function(){
 		setTimeout(function() {self.centerTheGrid();},100); // kludge for race condition(?)
 	};
 
-	exports.startCenteringInterval = function() {
+	p.startCenteringInterval = function() {
 		if (centeringInterval != undefined) { return; }
 		var self = this;
 		centeringInterval = setInterval(function(){self.centerTheGrid();},5);
 	};
 
-	exports.endCenteringInterval = function() {
+	p.endCenteringInterval = function() {
 		clearInterval(centeringInterval);
 		centeringInterval = undefined;
 	};
 
-	exports.handleSpreadIconClick = function(clickdata) {
+	p.handleSpreadIconClick = function(clickdata) {
 		isQuadClicked = true;
 		clearInterval(crawlInterval);
 		
@@ -521,7 +521,7 @@ var yono = (function(){
 	};
 
 	/** UI STUFF **/
-	exports.updatePieceInfo = function() {
+	p.updatePieceInfo = function() {
 		var cPc = pHash[currentCenterId];
 		var piDiv = $("#pieceInfo");
 		piDiv.empty();
@@ -554,7 +554,7 @@ var yono = (function(){
 		ciDiv.append("<div style='font-weight:bold;display:inline-block;margin-left:70px;'>" + ciImg +  aobj.name + "</div><br/>" + dLocale);
 	};
 
-	exports.updateStats = function() {
+	p.updateStats = function() {
 		var seen = 0;
 		for (var o in pHash) {
 			if (pHash[o].hasOwnProperty("seen") && pHash[o].seen) {
@@ -573,7 +573,7 @@ var yono = (function(){
 		}
 	};
 
-	exports.highlightAllQuads = function(qdiv, doOff) {
+	p.highlightAllQuads = function(qdiv, doOff) {
 		var jqDiv = $(qdiv)
 		var pcid = jqDiv.data().pcid;
 		
@@ -594,7 +594,7 @@ var yono = (function(){
 	};
 
 	/** MOVING AROUND **/
-	exports.navSplit = function(dir, pcid, isAutoplay) {
+	p.navSplit = function(dir, pcid, isAutoplay) {
 		// stop automatic play unless flagged
 		if (isAutoplay != true) {
 			clearInterval(crawlInterval);
@@ -634,7 +634,7 @@ var yono = (function(){
 		}
 	};
 
-	exports.navCollapse = function(isAutoplay) {
+	p.navCollapse = function(isAutoplay) {
 		// stop automatic play unless flagged
 		if (isAutoplay != true) {
 			clearInterval(crawlInterval);
@@ -650,7 +650,7 @@ var yono = (function(){
 	};
 
 	/** GRID SETUP **/
-	exports.setGridPoint = function(xoffset, yoffset, quad, img, id) {
+	p.setGridPoint = function(xoffset, yoffset, quad, img, id) {
 		var gpobj = new Object();
 		gpobj["x"] = xoffset;
 		gpobj["y"] = yoffset;
@@ -660,7 +660,7 @@ var yono = (function(){
 		return gpobj;
 	};
 
-	exports.generateBlankGrid = function(r, c) {
+	p.generateBlankGrid = function(r, c) {
 		rows = r;
 		cols = c;
 		$("#grid").empty();
@@ -676,7 +676,7 @@ var yono = (function(){
 	};
 
 	/** CRAWL FUNCTIONS **/
-	exports.setCrawlPattern = function(cp, del, doFirstStepImmediately) {
+	p.setCrawlPattern = function(cp, del, doFirstStepImmediately) {
 		if (cp == null) { return; }
 		crawlDelay = Math.max(crawlDelayMin,del);
 		
@@ -693,7 +693,7 @@ var yono = (function(){
 		crawlInterval = setInterval(function(){self.doNextCrawl();},crawlDelay);
 	};
 
-	exports.generateRandomCrawl = function(crawlSize) {
+	p.generateRandomCrawl = function(crawlSize) {
 		var cp = "";
 		var cPc = pHash[currentCenterId];
 		
@@ -749,7 +749,7 @@ var yono = (function(){
 		return cp;
 	};
 
-	exports.doNextCrawl = function() {
+	p.doNextCrawl = function() {
 		if (isSizeRandomized) {
 			if (Math.random() < 0.25) {
 				if (quadSize == (basePieceSize * 0.5)) {
@@ -781,14 +781,14 @@ var yono = (function(){
 	};
 
 	/** HELPER STUFF **/
-	exports.updateMaxDepths = function() {
+	p.updateMaxDepths = function() {
 		if (isGridSizeLocked) {
 			maxDepthH = 7; // TODO really calculate this
 			maxDepthV = 7; // TODO really calculate this
 		}
 	};
 
-	exports.getValidCenterId = function(centerId) {
+	p.getValidCenterId = function(centerId) {
 		if (pHash.hasOwnProperty(centerId) == false || centerId == null) {
 			if (pHash.hasOwnProperty(currentCenterId)) {
 				centerId = currentCenterId;
@@ -804,7 +804,7 @@ var yono = (function(){
 		return centerId;
 	};
 
-	exports.canSplit = function(dir, pcid) {
+	p.canSplit = function(dir, pcid) {
 		var p = pHash[pcid];
 		if (dir == "h" && p.horz.length > 0) {
 			return true;
@@ -814,7 +814,7 @@ var yono = (function(){
 		return false;
 	};
 
-	exports.centerTheGrid = function() {
+	p.centerTheGrid = function() {
 		// survey actual width of cells
 		var r = 0;
 		var actualWidth = 0;	
@@ -848,7 +848,7 @@ var yono = (function(){
 		$("#grid").css("margin-left",leftmargin);
 	};
 
-	exports.getURLParam = function(name) {
+	p.getURLParam = function(name) {
 		// get query string part of url into its own variable
 		var url = window.location.href;
 		var query_string = url.split("?");
@@ -874,7 +874,7 @@ var yono = (function(){
 		return "";
 	};
 
-	exports.AllowScroll = function(flag) {
+	p.AllowScroll = function(flag) {
 		if (flag == false) {
 			document.ontouchmove = function(e){ e.preventDefault(); } 
 		} else {
@@ -882,7 +882,7 @@ var yono = (function(){
 		}
 	};
 
-	exports.AllowZoom = function(flag) {
+	p.AllowZoom = function(flag) {
 	  if (flag == true) {
 	    $('head meta[name=viewport]').remove();
 	    $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10.0, minimum-scale=1, user-scalable=1" />');
@@ -893,15 +893,15 @@ var yono = (function(){
 	};
 
 	/** DISPLAY HELPERS **/
-	exports.displayChangeSize = function(s) {
+	p.displayChangeSize = function(s) {
 		quadSize = s;
 		this.showYonograph();
 	}
 
-	exports.displayTogglePixelEdgeFx = function() {
+	p.displayTogglePixelEdgeFx = function() {
 		isShowingPixelEdgeEffects = !isShowingPixelEdgeEffects;
 		return isShowingPixelEdgeEffects;
 	}
 
-	return exports;
+	return p;
 }());
