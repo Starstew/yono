@@ -1,3 +1,6 @@
+body {
+	font-family: verdana, sans-serif;
+}
 
 div.pieceRow {
 	background: #ffffff;
@@ -48,7 +51,6 @@ a.mainlinks:hover {
 	border-right:20px solid black;
 	border-bottom:10px solid black;
 }
-
 
 .gridcell {
 	padding: 0px;

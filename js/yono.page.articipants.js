@@ -110,15 +110,15 @@ yono.page.articipants = (function(){
 		var ay = $(holder_selector);
 		ay.empty();
 		
-		for (var i = 0; i < listOfIds.length; i++) {
-			var pid = listOfIds[i];
+		var reverseList = listOfIds.reverse();
+		for (var i = 0; i < reverseList.length; i++) {
+			var pid = reverseList[i];
 			var yonodeObj = yono.data.pHash[pid];
 			var artistName = yono.data.artists[yonodeObj.artist].name;
 			var di = parseInt(yonodeObj['subtime']);
 			var d = new Date(di*1000);
 			var dLocale = (d > 0) ? d.toDateString() : "";
-	
-			var yonodeDiv = "<div class='recentYonode'><a href='" + navUrlBase + "?centerId=" + pid + "'><img title='" + artistName + " on " + dLocale + "' src='" + piecesBasePath + "2x/" + pid + ".png'></a></div>";
+			var yonodeDiv = "<div class='recentYonode'><a href='" + navUrlBase + "?centerId=" + pid + "' title='Yonode" + pid + " by " + artistName + " on " + dLocale + "'><img src='" + piecesBasePath + "2x/" + pid + ".png' alt='Yonode" + pid + " at 2x size'></a></div>";
 			ay.append(yonodeDiv);
 		}
 	};
