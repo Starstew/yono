@@ -35,8 +35,7 @@ yono.page.articipants = (function(){
 			var len = (aObj.finishedPieces) ? aObj.finishedPieces.length : 0;
 			if (len == 0) { continue; } // skip if no pieces
 			var artist_entry = "<a class='artistListButton' href='javaScript:void(0)' onClick='yono.page.articipants.showArtistInfo(\"" + aObj.id + "\");'>" + aObj.name + 
-				"<span style='float:right;font-weight:bold;background:#aaaaaa;width:25px;text-align:center;color:#ffffff'> " + 
-				len + "</span></a>";
+				"<span> " + len + "</span></a>";
 	
 			divArtistList.append(artist_entry);
 		}	
@@ -59,7 +58,7 @@ yono.page.articipants = (function(){
 		
 		$("#artistExtraInfo").empty();
 		var len = (aObj.finishedPieces) ? aObj.finishedPieces.length : 0;
-		$("#artistExtraInfo").append("Finished " + len + " pieces. ");
+		$("#artistExtraInfo").append(len + " pieces completed. ");
 		$("#artistExtraInfo").append("[<a href='" + aObj.url + "'>website</a>]");
 			
 		// generate pieces grid

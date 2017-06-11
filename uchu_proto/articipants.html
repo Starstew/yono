@@ -1,105 +1,33 @@
 <html>
-<head>
-	<title>Yono - Articipants</title>
-	<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
+	<head>
+		<title>Yono - Articipants</title>
+		<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
+		<LINK href="css/uchu.css" rel="stylesheet" type="text/css">
 
-	<script src="../js/jquery-1.8.2.min.js"></script>
-	<script src="../js/yono.js"></script>
-	<script src="../js/yono.data.js"></script>
-	<script src="../js/yono.page.articipants.js"></script>
-	<script src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
+		<script defer src="../js/jquery-1.8.2.min.js"></script>
+		<script defer src="../js/yono.js"></script>
+		<script defer src="../js/yono.data.js"></script>
+		<script defer src="../js/yono.page.articipants.js"></script>
+		<script defer src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
+		<script defer src="js/init_articipants.js"></script> 
+	</head>
 
-	<script language="JavaScript">
-		$(function(){
-			yono.data.init({"jsonData":uchuDataJson}); // for local environment
-			//yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
-			yono.page.articipants.initPage({"navUrl":"index.html"} );
-		});
-	</script>
+	<body>
+		<h1>Yono - Articipants</h1>
 
-	<style type="text/css"> 
-		.artistListButton {
-			border:1px dotted gray;
-			padding: 10px;
-			margin: 5px;
-			display: inline-block;
-			width: 200px;
-		}
-		.artistListButton:hover {
-			background: #000000;
-			color: #ffffff;
-		}
-		.artistInfoDiv {
-			padding:10px;
-			border:1px solid #444444;
-		}
-		.artistName {
-			font-size:24px;
-			margin-bottom:5px;
-		}
-		.artistExtra {
-			margin-bottom:10px;
-		}
-		.pieceThumbnail {
-			padding:2px;
-			border:10px solid #ffffff;
-		}
-		.pieceThumbnail:hover {
-			border:10px dashed #888888;
-		}
-		.instructions {
-			text-align: center;
-			padding:8px;
-			background: #dddddd;
-		}
-		a.sortButton {
-			padding:5px;
-			background:#ffffff;
-			float:left;
-			border:1px solid #aaaaaa;
-			margin:2px;
-		}
-		a.sortButton:hover {
-			background:#dddddd;
-		}
-		a.sortButtonDown {
-			padding:5px;
-			background:#cfcfcf;
-			float:left;
-			border:1px solid #aaaaaa;
-			margin:2px;
-		}
+		<div class="artistInfoDiv" id="artistInfo">
+		<div id="pieceDetail"></div>
+		<div id="artistName" class="artistName"></div>
+		<div id="artistExtraInfo" class="artistExtra"></div>
+		<div id="piecesGrid"></div>
+		<br style="clear:both;"/>
+		</div>
+		<div class="instructions">Select <b>articipant</b> to see list of pieces. Select a <b>square</b> to view it larger. Select the <b>larger image</b> to go to the navigator.</div>
+		<h2>Articipants</h2>
+		<div class="artistListDiv" id="artistList"></div>
 
-		div.recentYonode {
-			padding:2px;
-			background:#000000;
-			margin:2px;
-			display:inline-block;
-		}
-	</style>
-</head>
-
-<body>
-	<h1>Yono - Articipants</h1>
-
-	<div class="artistInfoDiv" id="artistInfo">
-	<div id="pieceDetail" 
-	style="float:right;background:#333333;border:6px solid black;width:256px;height:256px;"></div>
-	<div id="artistName" class="artistName"></div>
-	<div id="artistExtraInfo" class="artistExtra"></div>
-	<div id="piecesGrid"></div>
-	<br style="clear:both;"/>
-	</div>
-	<div class="instructions">Select <b>articipant</b> to see list of pieces. Select a <b>square</b> to view it larger. Select the <b>larger image</b> to go to the navigator.</div>
-	<h2>Articipants</h2>
-	<div class="artistListDiv" id="artistList"></div>
-	<select name="sort" onChange="displayArtistList($(this).val());">
-	<option value="name">Sort: Names</option>
-	<option value="pieces">Sort: Pieces</option>
-	</select>
-
-	<h2>Recently added Yonodes</h2>
-	<div id="recentYonodes">(Coming Soon)</div>
-	<a style="display:inline-block;font-size:14px;padding:5px;border:1px solid #444444;margin:10px;" href="yonodes.html">View ALL Yonodes</a>
-</body>
+		<h2>Recently added Yonodes</h2>
+		<div id="recentYonodes">(Coming Soon)</div>
+		<a style="display:inline-block;font-size:14px;padding:5px;border:1px solid #444444;margin:10px;" href="yonodes.html">View ALL Yonodes</a>
+	</body>
 </html>

@@ -1,121 +1,48 @@
 <html>
-<head>
-<title>Yono - Prototype Uchu</title>
- <!--header=none-->
-<script src="../js/jquery-1.8.2.min.js"></script>
-<script src="../js/jquery.animate-colors-min.js"></script>
-<script src="../js/jquery.easing.1.3.js"></script>
-<script src="../js/jquery-ui-1.9.0.custom.min.js"></script>
-<script src="../js/purl.js"></script>
-<script src="../js/yono.js"></script>
-<script src="../js/yono.data.js"></script>
-<script src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
+	<head>
+		<title>Yono - Uchu Navigator</title>
+		 <!--header=none-->
+		 <LINK href="../css/yono.css" rel="stylesheet" type="text/css">
+		 <LINK href="css/uchu.css" rel="stylesheet" type="text/css">
 
-<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
+		<script defer src="../js/jquery-1.8.2.min.js"></script>
+		<script defer src="../js/jquery.animate-colors-min.js"></script>
+		<script defer src="../js/jquery.easing.1.3.js"></script>
+		<script defer src="../js/jquery-ui-1.9.0.custom.min.js"></script>
+		<script defer src="../js/purl.js"></script>
+		<script defer src="../js/yono.js"></script>
+		<script defer src="../js/yono.data.js"></script>
+		<script defer src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
+		<script defer src="js/init_navigator.js"></script>
+	</head>
 
-<style type="text/css">
-	li {
-		margin-bottom: 5px;
-	}
+	<body>
+		<h1>Yono Navigator</h1>
+		<div id="pieceInfo"></div>
 
-	a.expandlink {
-		cursor:pointer;
-		padding:5px;
-		white-space:nowrap;
-	}
+		<button id="toggleSize1" class="nav_ui toggle_size" data-pxsize="32" title="Toggle 1x pixel size"><span>1X</span></button>
+		<button id="toggleSize2" class="nav_ui toggle_size" data-pxsize="64" title="Toggle 2x pixel size"><span>2X</span></button>
+		<button id="toggleSize4" class="nav_ui toggle_size" data-pxsize="128" title="Toggle 4x pixel size"><span>4X</span></button>
+		<button id="toggleGrid" class="nav_ui" title="Toggle grid overlay"><span>Grid</span></button>
+		<button id="toggleAni" class="nav_ui" title="Toggle expanding/collapsing animation"><span>Animation</span></button>
+		 
+		<!-- YONOGRAPH -->
+		<div id="yonograph">
+			<div id="grid"></div>
+		</div>
 
-	a.expandlink:hover {
-		background:#ffff00;
-		padding:10px;
-	}
+		<br style="clear:both;"/>
 
-	.fsdiv {
-		float:left;
-		padding:6px;
-		background:#cccccc;
-		font-size:10px;
-		height:14px;
-	}
-	.fsdiv a {
-		margin:-5px;
-		padding:5px;
-	}
+		How to use this navigator:
+		<ul>
+		<li><b>Hover over</b> the center piece to find hot spots for <b>expanding</b> vertically and horizontally. Not all pieces have expansions.</li>
+		<li><b>Click a hotspot</b> (expansion arrows) to <i>expand</i> the reveal the image inside (in that direction).</li>
+		<li><b>Click on any little peripheral squares or rectangles</b> to <i>collapse</i> the structure to the image clicked.</li>
+		</ul>
 
-	.fsdiv a:hover {
-		background-color:#000000;
-		color:#ffffff;
-	}
-</style>
+		<p/>
 
-<script language="JavaScript">
-$(function () {
-	yono.data.init({"jsonData":uchuDataJson}); // for local environment
-	// yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
-	$("#yonograph").resizable({stop:function(){centerTheGrid();}});
-	$("#crawlInfo").draggable();
-});
-
-yono.data.jsonDataLoadComplete = function() {
-	var iobj = {
-		basePieceSize: 64,
-		uchuData: this,
-		isGridSizeLocked: true
-	}
-	yono.init(iobj);
-}
-
-function togglePixFx() {
-	var is = yono.displayTogglePixelEdgeFx();
-	var border = (is) ? "1px solid #000000" : "0px solid #000000";
-	var margin = (is) ? "0px" : "1px";
-	$("#toggleGrid").css("border",border);
-	$("#toggleGrid").css("margin",margin);
-	yono.showYonograph();
-}
-
-function toggleAnimation() {
-	isAnimationEnabled = !isAnimationEnabled;
-	var border = (isAnimationEnabled) ? "1px solid #000000" : "0px solid #000000";
-	var margin = (isAnimationEnabled) ? "0px" : "1px";
-	$("#toggleAni").css("border",border);
-	$("#toggleAni").css("margin",margin);
-	yono.showYonograph();
-}
-</script>
-
-</head>
-
-<body>
-
-<h1>Yono Navigator</h1>
-<div id="pieceInfo" style="float:left;margin-right:1px;white-space:nowrap;"></div>
-<div id="size_1" class="fsdiv" style="background:#eeeeee;"><a href="javascript:void(0)" onClick="yono.displayChangeSize(32);">1x</a></div>
-<div id="size_2" class="fsdiv" style="background:#d5d5d5;"><a href="javascript:void(0)" onClick="yono.displayChangeSize(64);">2x</a></div>
-<div id="size_3" class="fsdiv" style="background:#cccccc;"><a href="javascript:void(0)" onClick="yono.displayChangeSize(128);">4x</a></div>
-
-<div id="toggleGrid" class="fsdiv" style="background:#eeeeee;margin:1px;"><a href="javascript:void(0)" title="Toggle Grid Effect" onClick="togglePixFx();">Grid</a></div>
-<div id="toggleAni" class="fsdiv" style="background:#eeeeee;border:1px solid #000000;margin:0px;"><a href="javascript:void(0)" title="Toggle Animation on Expand/Collapse" onClick="toggleAnimation();">Animation</a></div>
- 
-<!-- YONOGRAPH -->
-<div id="yonograph" style="clear:both;border:1px solid white;margin:0px;width:100%;height:600px;background:#ffffff;overflow:hidden;background:#111;">
-<div id="grid"></div>
-</div>
-
-</p>
-
-<br style="clear:both;"/>
-
-How to use this navigator:
-<ul>
-<li><b>Hover over</b> the center piece to find hot spots for <b>expanding</b> vertically and horizontally. Not all pieces have expansions.</li>
-<li><b>Click a hotspot</b> (expansion arrows) to <i>expand</i> the reveal the image inside (in that direction).</li>
-<li><b>Click on any little peripheral squares or rectangles</b> to <i>collapse</i> the structure to the image clicked.</li>
-<li><b>Use keyboard keys!</b> Use the W, A, S, and D keys as if they were arrows (like in PC games). W/S are vertical expansion/collapse. A/D are horizontal expansion/collapse. The <b>[SPACEBAR]</b> will start a random crawl through the Yono pieces. The arrow keys work too, but also scroll your browser.</li>
-</ul>
-
-<p/>
-
-<div id="crawlInfo" style="opacity:0.8;background:black;width:200px;padding:10px;border:2px solid grey;display:none;color:white;"></div>
-</body>
+		<div id="crawlInfo"></div>
+	</body>
 
 </html>

@@ -32,7 +32,7 @@ function buildArtistsList() {
 	aDiv.empty();
 	for (var a in artists) {
 		var aObj = artists[a];
-		aDiv.append("<div style='display:inline-block;width:250px;padding:10px;border:1px solid #afafaf;margin:2px;'><div style='display:inline-block;width:45px;'><b>" + a + "</b></div> : <a href='" + articipantsUrl + "?artistId=" + a + "'>" + aObj.name + "</a></div>");
+		aDiv.append("<div class='artist_id_and_link'><div class='artist_id'>" + a + "</div> : <a href='" + articipantsUrl + "?artistId=" + a + "'>" + aObj.name + "</a></div>");
 	}
 }
 
@@ -49,27 +49,15 @@ function buildPiecesList() {
 		
 		var yonograph = p["yonograph"];
 		
-		
 		var h_class = "pieceConnection";
 		var v_class = "pieceConnection";
-		// process html for H
-		if (h.length > 0) {
-			h = h;
-		} else { 
-			h = "[OPEN]";
-			h_class = "pieceConnectionOpen";
-		}
-		
-		// process html for V
-		if (v.length > 0) {
-			v = v;
-		} else {
-			v = "[OPEN]";
-			v_class = "pieceConnectionOpen";
-		}
-		var h_html = "<div class='" + h_class + "'>HORZ:<br/> " + h + "</div>";
-		var v_html = "<div class='" + v_class + "'>VERT:<br/> " + v + "</div>";
-		
+		h_class += h.length <= 0 ? " isopen" : "";
+		v_class += v.length <= 0 ? " isopen" : "";
+		h = h || "OPEN";
+		v = v || "OPEN";
+
+		var h_html = "<div class='" + h_class + "'>H:" + h + "</div>";
+		var v_html = "<div class='" + v_class + "'>V:" + v + "</div>";
 		
 		var ohtml = "<div class='pieceRow' id='"+ id + "'>";
 		if (ip) {
@@ -77,7 +65,7 @@ function buildPiecesList() {
 			h_html = "<div class='pieceConnection'>COMING</div>";
 			v_html = "<div class='pieceConnection'>SOON</div>";
 		}
-		ohtml += "<div class='pieceImgId'>" + id + "<br/><a href='" + navUrl + "?centerId=" + id + "'><img width='64' height='64' src='"+img+"'/></a></div>";
+		ohtml += "<div class='pieceImgId'><div class='img_id'>" + id + "</div><a href='" + navUrl + "?centerId=" + id + "'><img width='64' height='64' src='"+img+"'/></a></div>";
 		ohtml += h_html;
 		ohtml += v_html;
 		

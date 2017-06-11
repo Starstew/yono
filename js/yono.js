@@ -492,6 +492,8 @@ var yono = (function(){
 		setTimeout(function() {self.centerTheGrid();},100); // kludge for race condition(?)
 	};
 
+	
+
 	p.startCenteringInterval = function() {
 		if (centeringInterval != undefined) { return; }
 		var self = this;
@@ -545,13 +547,9 @@ var yono = (function(){
 		// now the "crawlInfo" draggable pane
 		var ciDiv = $("#crawlInfo");
 		ciDiv.empty();
-		ciDiv.css("min-height","64px");
-		ciDiv.css("font-size","16px");
-		ciDiv.css("width","200px");
-		ciDiv.css("text-align","right");
 		pimg = "pieceImgs/2x/" + cPc["id"] + ".png";
-		var ciImg = "<img src='" + pimg + "' style='width:64px;height:64px;position:absolute;left:6;top:6;border:1px solid white;padding:2px;'/>";
-		ciDiv.append("<div style='font-weight:bold;display:inline-block;margin-left:70px;'>" + ciImg +  aobj.name + "</div><br/>" + dLocale);
+		var ciImg = "<img src='" + pimg + "'/>";
+		ciDiv.append("<div class='img_and_artist_holder'>" + ciImg +  aobj.name + "</div><br/>" + dLocale);
 	};
 
 	p.updateStats = function() {
@@ -898,10 +896,15 @@ var yono = (function(){
 		this.showYonograph();
 	}
 
-	p.displayTogglePixelEdgeFx = function() {
-		isShowingPixelEdgeEffects = !isShowingPixelEdgeEffects;
+	p.toggleAnimationEnabled = function(is_enabled) {
+		isAnimationEnabled = is_enabled || !isAnimationEnabled;
+		return isAnimationEnabled;
+	};
+
+	p.toggleShowingPixelEdgeEffects = function(is_enabled) {
+		isShowingPixelEdgeEffects = is_enabled || !isShowingPixelEdgeEffects;
 		return isShowingPixelEdgeEffects;
-	}
+	};
 
 	return p;
 }());

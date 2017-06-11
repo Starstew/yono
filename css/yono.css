@@ -1,32 +1,41 @@
 body {
 	font-family: verdana, sans-serif;
+	max-width: 900px;
+	margin: auto;
 }
 
-div.pieceRow {
+.pieceRow {
 	background: #ffffff;
-	border: 1px solid #888800;
+	padding: 1rem;
+	margin: 0.1rem;
+	float: left;
+	width: 120px;
+}
+
+.pieceImgId {
 	padding: 5px;
-	margin: 2px;
-	float: left;
+    text-align: center;
+    display: inline-block;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+    background: #cccccc;
 }
-
-div.pieceImgId {
-	padding: 2px;
-	text-align: center;
-	float: left;
-	width: 70px;
-	background: #cccccc;
+.pieceImgId .img_id {
 	font-weight: bold;
+	font-size: 1rem;
+}
+.pieceConnection {
+	display: inline-block;
+    width: 100%;
+    padding: 5px;
+    margin: 0px;
+    box-sizing: border-box;
+    background: #ddd;
+    text-align: center;
 }
 
-div.pieceConnection, div.pieceConnectionOpen {
-	float: left;
-	width: 100px;
-	padding: 2px;
-	margin: 2px;
-}
-
-div.pieceConnectionOpen {
+.pieceConnection.isopen {
 	background: #cccc00;
 }
 
@@ -57,4 +66,21 @@ a.mainlinks:hover {
 	margin: 0px;
 	display: inline-block;
 	overflow:hidden;
+}
+
+#pieceDetail {
+	float:right;
+	background:#333333;
+	border:6px solid black;
+	width:256px;
+	height:256px;
+}
+
+.artistListButton>span {
+	float:right;
+	font-weight:bold;
+	background:#aaaaaa;
+	padding: 5px;
+	text-align:center;
+	color:#ffffff;
 }

@@ -1,42 +1,30 @@
 <html>
-<head>
-<title>Yono - Articipants' Reference</title>
-<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
-<script src="../js/jquery-1.8.2.min.js"></script>
-<script src="../js/yono.js"></script>
-<script src="../js/yono.data.js"></script>
-<script src="../js/dashboard.js"></script>
-<script src="uchuDataJsonAs.js"></script> <!-- for local testing, load JSON object in JS -->
+	<head>
+		<title>Yono - Articipants' Reference</title>
+		<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
+		<LINK href="css/uchu.css" rel="stylesheet" type="text/css">
 
-<script language="JavaScript">
-	$(function() {
-		yono.data.init({"jsonData":uchuDataJson}); // for local environment
-		// yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
-	});
-	yono.data.jsonDataLoadComplete = function() {
-		jsonObj = yono.data.jsonObj;
-	    buildPiecesList();
-		buildArtistsList();
-	}
-</script>
+		<script defer src="../js/jquery-1.8.2.min.js"></script>
+		<script defer src="../js/yono.js"></script>
+		<script defer src="../js/yono.data.js"></script>
+		<script defer src="../js/dashboard.js"></script>
+		<script defer src="uchuDataJsonAs.js"></script> <!-- for local testing, load JSON object in JS -->
+		<script defer src="js/init_dashboard.js"></script>
+	</head>
 
-</head>
+	<body>
+		<h1>Yono - Articipants' Reference</h1>
+		
+		<h2>List of Yonodes</h2>
+		This list shows slot availability for each yonode. They are listed in order from newest to oldest.
+		The codes that look like "200_FOO" indicate the unique identifier for a yonode. Listed for each yonode are the other yonodes that bridge its halves horizontally and vertically. If a bridging slot hasn't been filled yet, it will be marked with the word "OPEN".
+		</p>
+		<p>
+		To see a piece in the <a href="index.html">Navigator</a>, click on the image for it.
+		</p>
+		<div id="manifest"></div>
 
-<body>
-<h1>Yono - Articipants' Reference</h1>
-This page displays a list of <i>yonodes</i> and how the slots on each are associated with other <i>yonodes</i>, 
-or not-yet-associated as the case may be.
-
-<h2>Yono slots</h2>
-Here is a list of slots/images in the prototype Yono, listed in reverse chronological order (of reservation time). You'll see an image with a unique ID under it. To the right of that, you'll see HORZ and VERT cells that describe whether that slot is open or filled. If filled, you'll see the unique ID of the piece that is filling it. HORZ is the piece that splits the image horizontally, VERT is the piece that splits the image vertically.
-<br/><br/>
-To see a piece in the <a href="./index.html">Navigator</a>, click on the image for it.
-</div>
-
-
-<div id="manifest"></div>
-
-<h2>List of Artists</h2>
-<div id="artistsList"></div>
-</body>
+		<h2>List of Artists</h2>
+		<div id="artistsList"></div>
+	</body>
 </html>

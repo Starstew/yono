@@ -1,0 +1,198 @@
+/* viewer */
+	li {
+		margin-bottom: 5px;
+	}
+	a.expandlink {
+		cursor:pointer;
+		padding:5px;
+		white-space:nowrap;
+	}
+	a.expandlink:hover {
+		background:#ffff00;
+		padding:10px;
+	}
+	.fsdiv {
+		float:left;
+		padding:6px;
+		background:#cccccc;
+		font-size:10px;
+		height:14px;
+	}
+	.fsdiv a {
+		margin:-5px;
+		padding:5px;
+	}
+	.fsdiv a:hover {
+		background-color:#000000;
+		color:#ffffff;
+	}
+
+	#yonograph {
+		clear:both;
+		border:1px solid white;
+		margin:0px;
+		width:100%;
+		height:600px;
+		background:#ffffff;
+		overflow:hidden;
+		background:#111;
+	}
+
+	#pieceInfo {
+		float:left;
+		margin-right:1px;
+		white-space:nowrap;
+	}
+
+	button.nav_ui {
+		padding: 5px;
+		border-radius: 10px;
+		color: #999;
+		cursor: pointer;
+		border: 0px solid black;
+		background-color: #eee;
+		margin: 0px;
+		min-width: 3rem;
+	}
+	button.nav_ui.enabled {
+		color: #111;
+		background-color: #ccc;
+	}
+	#toggleAni {
+		min-width: 7rem;
+	}
+	#crawlinfo {
+		opacity: 0.8;
+		background: black;
+		width: 200px;
+		padding: 10px;
+		border:2px solid grey;
+		color: white;
+		min-height: 64px;
+		font-size: 16px;
+		text-align: right;
+		display: none;
+	}
+	#crawlinfo.enabled {
+		display: block;
+	}
+	#crawlinfo .img_and_artist_holder {
+ 		font-weight: bold;
+ 		display: inline-block;
+ 		margin-left: 70px;
+	}
+	#crawlinfo .img_and_artist_holder img {
+		width:64px;
+		height:64px;
+		position:absolute;
+		left:6;
+		top:6;
+		border:1px solid white;
+		padding:2px;
+	}
+
+/* articipants */
+	.artistListButton {
+		border: 1px dotted gray;
+		padding: 10px;
+		margin: 5px;
+		display: inline-block;
+		width: 210px;
+		box-sizing: border-box;
+	}
+	.artistListButton:hover {
+		background: #000000;
+		color: #ffffff;
+	}
+	.artistInfoDiv {
+		padding:10px;
+		border:1px solid #444444;
+	}
+	.artistName {
+		font-size:24px;
+		margin-bottom:5px;
+	}
+	.artistExtra {
+		margin-bottom:10px;
+	}
+	.pieceThumbnail {
+		padding:2px;
+		border:10px solid #ffffff;
+	}
+	.pieceThumbnail:hover {
+		border:10px dashed #888888;
+	}
+	.instructions {
+		text-align: center;
+		padding:8px;
+		background: #dddddd;
+	}
+	a.sortButton {
+		padding:5px;
+		background:#ffffff;
+		float:left;
+		border:1px solid #aaaaaa;
+		margin:2px;
+	}
+	a.sortButton:hover {
+		background:#dddddd;
+	}
+	a.sortButtonDown {
+		padding:5px;
+		background:#cfcfcf;
+		float:left;
+		border:1px solid #aaaaaa;
+		margin:2px;
+	}
+
+	div.recentYonode {
+		padding:2px;
+		background:#000000;
+		margin:2px;
+		display:inline-block;
+	}
+
+/* dashboard */ 
+	.artist_id_and_link {
+		display:inline-block;
+		width:250px;
+		padding:10px;
+		border:1px solid #afafaf;
+		margin:2px;
+	}
+	.artist_id_and_link .artist_id {
+		display: inline-block;
+		width: 45px;
+		font-weight: bold;
+	}
+	.pieceImgId .img_id {
+		font-weight: bold;
+		font-size: 1rem;
+	}
+
+/* yonodes */
+	div.recentYonode {
+		padding:2px;
+		background:#000000;
+		margin:2px;
+		display:inline-block;
+		border:2px solid rgba(0,0,0,0);
+	}
+	div.recentYonode:hover {
+		border:2px solid blue;
+	}
+	span.yonodeData {
+		background:white;
+		padding:5px;
+		opacity:0.75;
+	}
+	span.yonodeDataLabel {
+		font-weight:bold;
+		width:220px;
+		background:grey;
+		padding:5px;
+		color:#ffffff;
+		display:inline-block;
+		opacity:0.75;
+		text-align:right;
+	}
