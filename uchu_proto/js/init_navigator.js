@@ -16,6 +16,9 @@ $(function () {
 		yono.displayChangeSize(px);
 		$(this).toggleClass("enabled",true);
 	});
+	$("#toggleCrawl").on("click", function(e){
+		$(this).toggleClass("enabled", yono.toggleRandomCrawl());
+	});
 
 	// set the ui values
 	$("#toggleAni, #toggleSize2").toggleClass("enabled",true);

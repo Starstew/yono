@@ -60,13 +60,12 @@
 
 	button.nav_ui {
 		padding: 5px;
-		border-radius: 10px;
+		border-radius: 5px;
 		color: #999;
 		cursor: pointer;
 		border: 0px solid black;
 		background-color: #eee;
 		margin: 0px;
-		min-width: 3rem;
 		outline: none;
 	}
 	button.nav_ui:focus {
@@ -79,16 +78,13 @@
 	.buttongroup.sizes .nav_ui {
 		border-radius: 0px;
 		margin: 0px;
+		min-width: 2rem;
 	}
 	.buttongroup.sizes .nav_ui:last-of-type {
-		border-radius: 0px 10px 10px 0px;
+		border-radius: 0px 5px 5px 0px;
 	}
 	.buttongroup.sizes .nav_ui:first-of-type {
-		border-radius: 10px 0px 0px 10px;
-	}
-
-	#toggleAni {
-		min-width: 7rem;
+		border-radius: 5px 0px 0px 5px;
 	}
 	#crawlinfo {
 		opacity: 0.8;

@@ -96,10 +96,10 @@ var yono = (function(){
 			
 	  		if (kcode == "72") { // 'h'
 	  			self.navSplit("h",currentCenterId); // hspread
-	  			clearInterval(crawlInterval);
+	  			this.toggleRandomCrawl(false);
 	  		} else if (kcode == "86") { //  'v'
 	  			self.navSplit("v",currentCenterId); 
-	  			clearInterval(crawlInterval);
+	  			this.toggleRandomCrawl(false);
 			} else if (kcode == "40" || kcode == "83") { // down / 'a'
 				if (lastKeyCode == "38" || lastKeyCode == "87") { // opposite (u/'w')
 					isArrowExpanding = !isArrowExpanding;
@@ -111,7 +111,7 @@ var yono = (function(){
 				} else {
 					self.navCollapse("v");
 				}
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "38" || kcode == "87") { // up / 'w'
 				if (lastKeyCode == "40" || lastKeyCode == "83") { // opposite (d/'s')
 					isArrowExpanding = !isArrowExpanding;
@@ -123,7 +123,7 @@ var yono = (function(){
 				} else {
 					self.navCollapse("v");
 				}
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "37" || kcode == "68") { // left / 'd'
 				if (lastKeyCode == "39" || lastKeyCode == "65") { // opposite ('a')
 					isArrowExpanding = !isArrowExpanding;
@@ -135,7 +135,7 @@ var yono = (function(){
 				} else {
 					self.navCollapse("h");
 				}
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "39" || kcode == "65") { // right
 				if (lastKeyCode == "37" || lastKeyCode == "68") { // opposite
 					isArrowExpanding = !isArrowExpanding;
@@ -147,20 +147,20 @@ var yono = (function(){
 				} else {
 					self.navCollapse("h");
 				}
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 	  		} else if (kcode == "67") { // 'c'
 				self.navCollapse();
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "13") { // 'enter'
 				self.navSplit();
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "73") { // 'i'nfinite(ish)
 				crawlIndex=-1;
 				isSizeRandomized = true;
 				randomCrawlLength = 256;
 				self.setCrawlPattern('random',3000,true);
 			} else if (kcode == "32") { // 'spacebar'
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 				crawlIndex=-1;
 				self.setCrawlPattern('random',3000,true);
 			} else if (kcode == "49") { // 1
@@ -174,7 +174,7 @@ var yono = (function(){
 				self.showYonograph();
 			} else if (kcode == "82") { // r
 				crawlIndex=-1;
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 				self.setCrawlPattern("ccccccccccccc");
 			} else {
 				return;
@@ -457,7 +457,7 @@ var yono = (function(){
 			var self = this;
 			cdiv.click(function(e) {
 				isQuadClicked = true;
-				clearInterval(crawlInterval);
+				this.toggleRandomCrawl(false);
 				
 				// check if this is the "center", then treat diff
 				var pcid = $(this).data().pcid;
@@ -492,8 +492,6 @@ var yono = (function(){
 		setTimeout(function() {self.centerTheGrid();},100); // kludge for race condition(?)
 	};
 
-	
-
 	p.startCenteringInterval = function() {
 		if (centeringInterval != undefined) { return; }
 		var self = this;
@@ -507,7 +505,7 @@ var yono = (function(){
 
 	p.handleSpreadIconClick = function(clickdata) {
 		isQuadClicked = true;
-		clearInterval(crawlInterval);
+		this.toggleRandomCrawl(false);
 		
 		// data
 		var cdarray = clickdata.split("_");
@@ -597,7 +595,7 @@ var yono = (function(){
 	p.navSplit = function(dir, pcid, isAutoplay) {
 		// stop automatic play unless flagged
 		if (isAutoplay != true) {
-			clearInterval(crawlInterval);
+			this.toggleRandomCrawl(false);
 		}
 		
 		if (pcid == null) {
@@ -637,7 +635,7 @@ var yono = (function(){
 	p.navCollapse = function(isAutoplay) {
 		// stop automatic play unless flagged
 		if (isAutoplay != true) {
-			clearInterval(crawlInterval);
+			this.toggleRandomCrawl(false);
 		}
 		
 		var pcid = currentCenterId;
@@ -682,7 +680,7 @@ var yono = (function(){
 		
 		currentCenterId = this.getValidCenterId(currentCenterId);
 		if (cp == "random") {
-			crawlDelay = Math.max(2100,del);
+			crawlDelay = Math.max(2170,del);
 			cp = this.generateRandomCrawl();
 		}
 		crawlSequence = cp.split("");
@@ -691,6 +689,16 @@ var yono = (function(){
 		}
 		var self = this;
 		crawlInterval = setInterval(function(){self.doNextCrawl();},crawlDelay);
+	};
+
+	p.toggleRandomCrawl = function(forced_val) {
+		if (crawlInterval || forced_val == false) {
+			clearInterval(crawlInterval);
+			crawlInterval = null;
+		} else {
+			p.setCrawlPattern("random", 2170, true);
+		}
+		return(crawlInterval != null);
 	};
 
 	p.generateRandomCrawl = function(crawlSize) {
@@ -764,7 +772,7 @@ var yono = (function(){
 
 		crawlIndex += 1;
 		if (crawlIndex > crawlSequence.length - 1) {
-			clearInterval(crawlInterval);
+			this.toggleRandomCrawl(false);
 			return;
 		}
 		
