@@ -17,7 +17,7 @@ $(function () {
 		$(this).toggleClass("enabled",true);
 	});
 
-	// set the ui elements properly
+	// set the ui values
 	$("#toggleAni, #toggleSize2").toggleClass("enabled",true);
 	yono.displayChangeSize(64);
 	yono.toggleAnimationEnabled(true);

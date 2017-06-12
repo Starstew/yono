@@ -525,8 +525,7 @@ var yono = (function(){
 	/** UI STUFF **/
 	p.updatePieceInfo = function() {
 		var cPc = pHash[currentCenterId];
-		var piDiv = $("#pieceInfo");
-		piDiv.empty();
+		var piDiv = $("#pieceinfo");
 		var pimg = piecesImagesPath + cPc["id"] + ".png";
 		if (cPc["ip"]) {
 			pimg = piecesImagesPath + "_inprogress.png";
@@ -542,8 +541,11 @@ var yono = (function(){
 		var dLocale = (d > 0) ? (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear() : "";
 		var apLink = "articipants.html?artistId="+cPc['artist'];
 		
-		piDiv.append("<div class='fsdiv' style='background:#f0f0f0;width:400px;margin-right:2px;'>Center Yonode created by <a href='" + apLink + "'><b>" + aobj.name + "</b></a> on " + dLocale + " [<a href='"+pimg+"' target='new'>I</a>] [<a href='javascript:void(0)' onClick='window.location=\"?centerId=" + currentCenterId + "\"'>LINK</a>]</div>  ");	
-		
+		piDiv.find(".pi_artist_name_link").empty().append("<a href='" + apLink + "'>" + aobj.name  + "</a>");
+		piDiv.find(".pi_datetime").empty().append(dLocale);
+		piDiv.find(".pi_image_link").empty().append("<a href='"+pimg+"' target='new'>I</a>");
+		piDiv.find(".pi_viewer_link").empty().append("<a href='?centerId=" + currentCenterId + "'>LINK</a>");
+
 		// now the "crawlInfo" draggable pane
 		var ciDiv = $("#crawlInfo");
 		ciDiv.empty();

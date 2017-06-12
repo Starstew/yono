@@ -1,6 +1,7 @@
 <html>
 	<head>
-		<title>Yono - Uchu Navigator</title>
+		<title>Yono - Navigator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		 <!--header=none-->
 		 <LINK href="../css/yono.css" rel="stylesheet" type="text/css">
 		 <LINK href="css/uchu.css" rel="stylesheet" type="text/css">
@@ -18,30 +19,31 @@
 
 	<body>
 		<h1>Yono Navigator</h1>
-		<div id="pieceInfo"></div>
-
-		<button id="toggleSize1" class="nav_ui toggle_size" data-pxsize="32" title="Toggle 1x pixel size"><span>1X</span></button>
-		<button id="toggleSize2" class="nav_ui toggle_size" data-pxsize="64" title="Toggle 2x pixel size"><span>2X</span></button>
-		<button id="toggleSize4" class="nav_ui toggle_size" data-pxsize="128" title="Toggle 4x pixel size"><span>4X</span></button>
-		<button id="toggleGrid" class="nav_ui" title="Toggle grid overlay"><span>Grid</span></button>
-		<button id="toggleAni" class="nav_ui" title="Toggle expanding/collapsing animation"><span>Animation</span></button>
-		 
-		<!-- YONOGRAPH -->
+		<div id="pieceinfo">Center by
+			<span class="pi_artist_name_link"></span>
+			on <span class="pi_datetime"></span>
+			[<span class="pi_image_link"></span>]
+			[<span class="pi_viewer_link"></span>]
+		</div>
+		
 		<div id="yonograph">
 			<div id="grid"></div>
 		</div>
-
-		<br style="clear:both;"/>
-
-		How to use this navigator:
-		<ul>
-		<li><b>Hover over</b> the center piece to find hot spots for <b>expanding</b> vertically and horizontally. Not all pieces have expansions.</li>
-		<li><b>Click a hotspot</b> (expansion arrows) to <i>expand</i> the reveal the image inside (in that direction).</li>
-		<li><b>Click on any little peripheral squares or rectangles</b> to <i>collapse</i> the structure to the image clicked.</li>
-		</ul>
-
-		<p/>
-
+		<div id="viewcontrols">
+			<div class="buttongroup sizes">
+				<button id="toggleSize1" class="nav_ui toggle_size" data-pxsize="32" title="Toggle 1x pixel size"><span>1X</span></button><button id="toggleSize2" class="nav_ui toggle_size" data-pxsize="64" title="Toggle 2x pixel size"><span>2X</span></button><button id="toggleSize4" class="nav_ui toggle_size" data-pxsize="128" title="Toggle 4x pixel size"><span>4X</span></button>
+			</div>
+			<button id="toggleGrid" class="nav_ui" title="Toggle grid overlay"><span>Grid</span></button>
+			<button id="toggleAni" class="nav_ui" title="Toggle expanding/collapsing animation"><span>Animation</span></button>
+		</div>
+		<div id="instructions">
+			How to use this navigator:
+			<ul>
+			<li><b>Hover over</b> the center piece to find hot spots for <b>expanding</b> vertically and horizontally. Not all pieces have expansions.</li>
+			<li><b>Click a hotspot</b> (expansion arrows) to <i>expand</i> the reveal the image inside (in that direction).</li>
+			<li><b>Click on any little peripheral squares or rectangles</b> to <i>collapse</i> the structure to the image clicked.</li>
+			</ul>
+		</div>
 		<div id="crawlInfo"></div>
 	</body>
 

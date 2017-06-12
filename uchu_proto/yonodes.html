@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>Yono - Yonodes</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<LINK href="../css/yono.css" rel="stylesheet" type="text/css">
 		<LINK href="css/uchu.css" rel="stylesheet" type="text/css">
 		<script defer src="../js/jquery-1.8.2.min.js"></script>
@@ -10,9 +11,10 @@
 		<script defer src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
 		<script defer src="js/init_yonodes.js"></script>
 	</head>
-	<body>
-		<h2>All of the Yonodes<br/><span style="font-size:12px;">Sorted from newest to oldest</span></h2>
-		<div style="padding:10px;background:#4f436e;display:inline-block;" id="uchuReport"></div>
+	<body class="yonodes">
+		<h1><a href="index.html">YONO</a> / All of the Yonodes</h1>
+		Sorted from newest to oldest.
+		<div id="uchuReport"></div>
 		<div id="allYonodes"></div>
 	</body>
 </html>

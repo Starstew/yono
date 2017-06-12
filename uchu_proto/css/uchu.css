@@ -27,6 +27,11 @@
 		color:#ffffff;
 	}
 
+	#viewcontrols {
+		text-align: right;
+		padding: 10px 0px;
+	}
+
 	#yonograph {
 		clear:both;
 		border:1px solid white;
@@ -39,9 +44,18 @@
 	}
 
 	#pieceInfo {
-		float:left;
-		margin-right:1px;
-		white-space:nowrap;
+		display: block;
+		background-color: #ccc;
+		width: 100%;
+		padding: 5px;
+		box-sizing: border-box;
+		font-size: 0.5rem;
+	}
+
+	.buttongroup {
+		display: inline-block;
+		margin: 0px;
+		padding: 0px;
 	}
 
 	button.nav_ui {
@@ -53,11 +67,26 @@
 		background-color: #eee;
 		margin: 0px;
 		min-width: 3rem;
+		outline: none;
+	}
+	button.nav_ui:focus {
+		text-decoration: underline;
 	}
 	button.nav_ui.enabled {
 		color: #111;
-		background-color: #ccc;
+		background-color: #ccf;
 	}
+	.buttongroup.sizes .nav_ui {
+		border-radius: 0px;
+		margin: 0px;
+	}
+	.buttongroup.sizes .nav_ui:last-of-type {
+		border-radius: 0px 10px 10px 0px;
+	}
+	.buttongroup.sizes .nav_ui:first-of-type {
+		border-radius: 10px 0px 0px 10px;
+	}
+
 	#toggleAni {
 		min-width: 7rem;
 	}
@@ -196,3 +225,47 @@
 		opacity:0.75;
 		text-align:right;
 	}
+	#uchureport {
+		padding:10px;
+		background:#4f436e;
+		display:inline-block; 
+	}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	h1 {
+		margin: 5px;
+	}
+	#viewcontrols {
+		text-align: center;
+	}
+	#instructions {
+		padding: 1rem;
+	}
+	#artistInfo {
+		text-align: center;
+		border: none;
+	}
+	#pieceDetail {
+		float: none;
+		display: inline-block;
+	}
+	body.articipants,
+	body.yonodes {
+		text-align: center;
+	}
+	#yonograph {
+		height: 75%;
+	}
+	span.yonodeDataLabel,
+	span.yonodeData {
+		width: 75%;
+		line-height: 1rem;
+		height: auto;
+		margin: 0px;
+		padding: 7px;
+		opacity: 1;
+		font-size: 1rem;
+		display: inline-block;
+		text-align: center;
+	}
+}
