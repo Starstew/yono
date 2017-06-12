@@ -457,7 +457,7 @@ var yono = (function(){
 			var self = this;
 			cdiv.click(function(e) {
 				isQuadClicked = true;
-				this.toggleRandomCrawl(false);
+				self.toggleRandomCrawl(false);
 				
 				// check if this is the "center", then treat diff
 				var pcid = $(this).data().pcid;
