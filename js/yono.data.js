@@ -169,6 +169,20 @@ yono.data = (function(){
 		}
 		return b;
 	};
+
+	var getAncestorSet = function(cyonode,depth) {
+		var a = [],
+			current_yonode = cyonode;
+		a.push({id:cyonode,split:this.pHash[cyonode]["split"]});
+		for (var i=0;i<depth;i++) {
+			current_yonode = this.pHash[current_yonode]["parent"];
+			if (!current_yonode) {
+				break;
+			}
+			a.push({id:current_yonode,split:this.pHash[current_yonode]["split"]});
+		}
+		return a;
+	};
 	
 	// helpers
 	var sortByName = function(a, b) {
@@ -209,7 +223,8 @@ yono.data = (function(){
 		getPiecesSortedBySubtime: getPiecesSortedBySubtime,
 		sortByName: sortByName,
 		sortByFinishedPieces: sortByFinishedPieces,
-		sortBySubtime: sortBySubtime
+		sortBySubtime: sortBySubtime,
+		getAncestorSet: getAncestorSet
 	};
 
 	return exports;
