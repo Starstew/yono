@@ -92,14 +92,14 @@ var yono = (function(){
 	p.setKeyEventHandlers = function() {
 		var self = this;
 		$('body').keyup(function(e) {
-	  		var kcode = e.keyCode;
-			
-	  		if (kcode == "72") { // 'h'
-	  			self.navSplit("h",currentCenterId); // hspread
-	  			this.toggleRandomCrawl(false);
-	  		} else if (kcode == "86") { //  'v'
-	  			self.navSplit("v",currentCenterId); 
-	  			this.toggleRandomCrawl(false);
+			var kcode = e.keyCode;
+
+			if (kcode == "72") { // 'h'
+				self.navSplit("h",currentCenterId); // hspread
+				this.toggleRandomCrawl(false);
+			} else if (kcode == "86") { //  'v'
+				self.navSplit("v",currentCenterId); 
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "40" || kcode == "83") { // down / 'a'
 				if (lastKeyCode == "38" || lastKeyCode == "87") { // opposite (u/'w')
 					isArrowExpanding = !isArrowExpanding;
@@ -179,7 +179,7 @@ var yono = (function(){
 			} else {
 				return;
 			}
-	  		lastKeyCode = kcode;
+			lastKeyCode = kcode;
 		});
 	};
 
