@@ -92,14 +92,14 @@ var yono = (function(){
 	p.setKeyEventHandlers = function() {
 		var self = this;
 		$('body').keyup(function(e) {
-	  		var kcode = e.keyCode;
-			
-	  		if (kcode == "72") { // 'h'
-	  			self.navSplit("h",currentCenterId); // hspread
-	  			this.toggleRandomCrawl(false);
-	  		} else if (kcode == "86") { //  'v'
-	  			self.navSplit("v",currentCenterId); 
-	  			this.toggleRandomCrawl(false);
+			var kcode = e.keyCode;
+
+			if (kcode == "72") { // 'h'
+				self.navSplit("h",currentCenterId); // hspread
+				this.toggleRandomCrawl(false);
+			} else if (kcode == "86") { //  'v'
+				self.navSplit("v",currentCenterId); 
+				this.toggleRandomCrawl(false);
 			} else if (kcode == "40" || kcode == "83") { // down / 'a'
 				if (lastKeyCode == "38" || lastKeyCode == "87") { // opposite (u/'w')
 					isArrowExpanding = !isArrowExpanding;
@@ -179,7 +179,7 @@ var yono = (function(){
 			} else {
 				return;
 			}
-	  		lastKeyCode = kcode;
+			lastKeyCode = kcode;
 		});
 	};
 
@@ -891,13 +891,13 @@ var yono = (function(){
 	};
 
 	p.AllowZoom = function(flag) {
-	  if (flag == true) {
-	    $('head meta[name=viewport]').remove();
-	    $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10.0, minimum-scale=1, user-scalable=1" />');
-	  } else {
-	    $('head meta[name=viewport]').remove();
-	    $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0" />');              
-	  }
+		if (flag == true) {
+			$('head meta[name=viewport]').remove();
+			$('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10.0, minimum-scale=1, user-scalable=1" />');
+		} else {
+			$('head meta[name=viewport]').remove();
+			$('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0" />');              
+		}
 	};
 
 	/** DISPLAY HELPERS **/

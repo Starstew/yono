@@ -169,25 +169,39 @@ yono.data = (function(){
 		}
 		return b;
 	};
+
+	var getAncestorSet = function(cyonode,depth) {
+		var a = [],
+			current_yonode = cyonode;
+		a.push({id:cyonode,split:this.pHash[cyonode]["split"]});
+		for (var i=0;i<depth;i++) {
+			current_yonode = this.pHash[current_yonode]["parent"];
+			if (!current_yonode) {
+				break;
+			}
+			a.push({id:current_yonode,split:this.pHash[current_yonode]["split"]});
+		}
+		return a;
+	};
 	
 	// helpers
 	var sortByName = function(a, b) {
 		var prop = "name";
 		var aP = (a == undefined) ? "" : a[prop].toLowerCase();
-	  	var bP = (b == undefined) ? "" : b[prop].toLowerCase();
-	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
+		var bP = (b == undefined) ? "" : b[prop].toLowerCase();
+		return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
 	};
 	var sortByFinishedPieces = function(a, b) {
 		var prop = "finishedPieces";
 		var aP = (a == undefined || a[prop] == undefined) ? 0 : a[prop].length;
-	  	var bP = (b == undefined || b[prop] == undefined) ? 0 : b[prop].length;
-	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
+		var bP = (b == undefined || b[prop] == undefined) ? 0 : b[prop].length;
+		return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
 	};
 	var sortBySubtime = function(a, b) {
 		var prop = "subtime";
 		var aP = (a == undefined || a[prop] == undefined) ? 0 : parseInt(a[prop]);
-	  	var bP = (b == undefined || b[prop] == undefined) ? 0 : parseInt(b[prop]);
-	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
+		var bP = (b == undefined || b[prop] == undefined) ? 0 : parseInt(b[prop]);
+		return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
 	};
 
 	exports = {
@@ -209,7 +223,8 @@ yono.data = (function(){
 		getPiecesSortedBySubtime: getPiecesSortedBySubtime,
 		sortByName: sortByName,
 		sortByFinishedPieces: sortByFinishedPieces,
-		sortBySubtime: sortBySubtime
+		sortBySubtime: sortBySubtime,
+		getAncestorSet: getAncestorSet
 	};
 
 	return exports;

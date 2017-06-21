@@ -227,6 +227,15 @@
 		display:inline-block; 
 	}
 
+/* canvas controls */
+	#nav_controls {
+		margin: auto;
+		text-align: center;
+	}
+	#nav_controls button {
+		display: inline-block;
+	}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 	h1 {
 		margin: 5px;

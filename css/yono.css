@@ -14,12 +14,12 @@ body {
 
 .pieceImgId {
 	padding: 5px;
-    text-align: center;
-    display: inline-block;
-    float: left;
-    width: 100%;
-    box-sizing: border-box;
-    background: #cccccc;
+	text-align: center;
+	display: inline-block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	background: #cccccc;
 }
 .pieceImgId .img_id {
 	font-weight: bold;
@@ -27,12 +27,12 @@ body {
 }
 .pieceConnection {
 	display: inline-block;
-    width: 100%;
-    padding: 5px;
-    margin: 0px;
-    box-sizing: border-box;
-    background: #ddd;
-    text-align: center;
+	width: 100%;
+	padding: 5px;
+	margin: 0px;
+	box-sizing: border-box;
+	background: #ddd;
+	text-align: center;
 }
 
 .pieceConnection.isopen {
@@ -83,4 +83,10 @@ a.mainlinks:hover {
 	padding: 5px;
 	text-align:center;
 	color:#ffffff;
+}
+
+.hidden {
+	position: fixed;
+	left: -2000px;
+	top: -2000px;
 }
