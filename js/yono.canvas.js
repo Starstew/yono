@@ -1,6 +1,8 @@
 yono.canvas = (function(){
 	var p = {},
-		pieces_path = "./pieceImgs/2X/",
+		pieces_path_base = "./pieceImgs/",
+		pieces_set = "2X",
+		pieces_path = pieces_path_base + "/" + pieces_set + "/",
 		id_canvas_element = "yono_canvas",
 		id_canvas_buffer1 = "yono_canvas_buffer1",
 		nodesize = 128,
@@ -15,6 +17,14 @@ yono.canvas = (function(){
 		yonograph_y;
 
 	var init = function(iobj) {
+		pieces_set = (iobj && iobj.pieces_set) ? iobj.pieces_set : "2X";
+		if (pieces_set == "2X" || pieces_set == "4X") {
+			pieces_path = pieces_path_base + pieces_set + "/";
+			nodesize = (pieces_set == "2X") ? 128 : 256;
+		} else {
+			nodesize = 64;
+		}
+
 		id_canvas_element = (iobj && iobj['id_canvas_element']) ? iobj.id_canvas_element : id_canvas_element;
 
 		// init canvas
@@ -29,6 +39,7 @@ yono.canvas = (function(){
 		yonograph_x = (cvs.width/2)-(nodesize/2);
 		yonograph_y = (cvs.height/2)-(nodesize/2);
 
+		
 	};
 
 	var loadImages = function(id_array) {
