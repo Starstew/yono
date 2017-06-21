@@ -14,7 +14,8 @@ yono.canvas = (function(){
 		images_loaded = {},
 		yonograph_details = {},
 		yonograph_x,
-		yonograph_y;
+		yonograph_y,
+		navstate_yid;
 
 	var init = function(iobj) {
 		pieces_set = (iobj && iobj.pieces_set) ? iobj.pieces_set : "2X";
@@ -38,8 +39,6 @@ yono.canvas = (function(){
 
 		yonograph_x = (cvs.width/2)-(nodesize/2);
 		yonograph_y = (cvs.height/2)-(nodesize/2);
-
-		
 	};
 
 	var loadImages = function(id_array) {
@@ -112,7 +111,6 @@ yono.canvas = (function(){
 		tgt_ctx.drawImage(img,nshalf,0,nshalf,nshalf,x+w,y,nshalf,nshalf); 			//ne
 		tgt_ctx.drawImage(img,nshalf,nshalf,nshalf,nshalf,x+w,y+h,nshalf,nshalf); 	//se
 		tgt_ctx.drawImage(img,0,nshalf,nshalf,nshalf,x,y+h,nshalf,nshalf); 			//sw
-
 	};
 
 	var bufferCanvas = function(f_cvs,t_cvs) {
@@ -134,7 +132,7 @@ yono.canvas = (function(){
 	*/
 	var drawYonographProgression = function(dir,offset,f_cvs) {
 		dir = dir || "v";
-		offset = offset || 1;
+		offset = (offset != null) ? offset : 1;
 
 		f_cvs = f_cvs || cvs_buffer1;
 		var t_ctx = ctx;
@@ -193,11 +191,32 @@ yono.canvas = (function(){
 		}
 	};
 
+	var setNavStateYonoId = function(nsyid) {
+		navstate_yid = nsyid;
+	};
+
+	var expandCurrentYonode = function(is_vert) {
+		var p = yono.data.pHash[navstate_yid];
+		var tyid = (is_vert) ? p.vert : p.horz;
+		if (tyid) {
+			var nset = yono.data.getAncestorSet(tyid,100);
+			expandToYonograph({yid:tyid});
+		}
+	};
+
+	var collapseCurrentYonode = function() {
+		var p = yono.data.pHash[navstate_yid];
+		var tyid = p.parent;
+		if (tyid) {
+			collapseToYonographParent({yid:navstate_yid});
+		}
+	}
+
 	var expandToYonograph = function(params) {
 		var depth = (params && params.depth) ? params.depth : 0,
 			delay = (params && params.delay) ? params.delay : 2000
 			yid = (params && params.yid) ? params.yid : "142_IZO";
-
+		navstate_yid = yid;
 		var set = yono.data.getAncestorSet(yid,depth);
 		set.reverse();
 
@@ -220,13 +239,42 @@ yono.canvas = (function(){
 		}
 	};
 
+	var collapseToYonographParent = function(params) {
+		var depth = (params && params.depth) ? params.depth : 0,
+			delay = (params && params.delay) ? params.delay : 2000
+			yid = (params && params.yid) ? params.yid : "142_IZO";
+		navstate_yid = yono.data.pHash[yid].parent;
+		var set = yono.data.getAncestorSet(yid,depth);
+
+		var len = set.length;
+		for (var i=0; i<len; i++) {
+			setTimeout(function(nsid){
+				var nset = yono.data.getAncestorSet(nsid,100);
+				yono.canvas.drawYonograph(nset,yonograph_x,yonograph_y,$("#"+id_canvas_buffer1)[0]);
+				var dir = nset[0].split;
+				var easing = [1.1, 0.6, 0.3, -0.05, 0.05, 0];
+				var len = easing.length;
+				for (var j=0;j<len;j++) {
+					var interval = j * 75;
+					var amt = easing[j];
+					setTimeout(function(a){
+						yono.canvas.drawYonographProgression(dir,a);
+					},interval,amt);
+				}
+			},delay*i,set[i].id);
+		}
+	};
+
 	p = {
 		init:init,
 		loadImages:loadImages,
 		drawYonograph:drawYonograph,
 		bufferCanvas:bufferCanvas,
 		drawYonographProgression:drawYonographProgression,
-		expandToYonograph:expandToYonograph
+		expandToYonograph:expandToYonograph,
+		expandCurrentYonode:expandCurrentYonode,
+		collapseCurrentYonode:collapseCurrentYonode,
+		setNavStateYonoId:setNavStateYonoId
 	};
 	return p;
 }());

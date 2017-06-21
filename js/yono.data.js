@@ -188,20 +188,20 @@ yono.data = (function(){
 	var sortByName = function(a, b) {
 		var prop = "name";
 		var aP = (a == undefined) ? "" : a[prop].toLowerCase();
-	  	var bP = (b == undefined) ? "" : b[prop].toLowerCase();
-	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
+		var bP = (b == undefined) ? "" : b[prop].toLowerCase();
+		return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
 	};
 	var sortByFinishedPieces = function(a, b) {
 		var prop = "finishedPieces";
 		var aP = (a == undefined || a[prop] == undefined) ? 0 : a[prop].length;
-	  	var bP = (b == undefined || b[prop] == undefined) ? 0 : b[prop].length;
-	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
+		var bP = (b == undefined || b[prop] == undefined) ? 0 : b[prop].length;
+		return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
 	};
 	var sortBySubtime = function(a, b) {
 		var prop = "subtime";
 		var aP = (a == undefined || a[prop] == undefined) ? 0 : parseInt(a[prop]);
-	  	var bP = (b == undefined || b[prop] == undefined) ? 0 : parseInt(b[prop]);
-	  	return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
+		var bP = (b == undefined || b[prop] == undefined) ? 0 : parseInt(b[prop]);
+		return ((aP < bP) ? -1 : ((aP > bP) ? 1 : 0));
 	};
 
 	exports = {

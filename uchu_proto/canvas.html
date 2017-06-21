@@ -12,12 +12,17 @@
 	<script defer src="../js/yono.canvas.js"></script>
 	<script defer src="uchuDataJsonAs.js"></script> <!-- for local testing,load JSON object in JS -->
 	<script defer src="js/init_canvas.js"></script>
-	<!-- TODO: init canvas -->
-	
 </head>
 <body>
 	<h1>Yono / Canvas</h1>
 	<canvas id="yono_canvas" width="900px" height="600px" style="border: 1px dotted #aaa;"></canvas>
+
+	<div id="nav_controls">
+		<button class="nav_expand_vert">Expand V</button>
+		<button class="nav_expand_horz">Expand H</button>
+		<button class="nav_collapse">Collapse</button>
+	</div>
+
 	<canvas id="yono_canvas_buffer1" class="hidden"></canvas>
 </body>
 </html>
