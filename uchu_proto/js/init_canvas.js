@@ -12,6 +12,7 @@ yono.data.jsonDataLoadComplete = function() {
 	}
 	yono.canvas.loadImages(img_arr);
 	setTimeout(function(){
-		yono.canvas.animateToYonograph("146_IZO");
+		var params = {yid:"045_OED",depth:2,speed:1000};
+		yono.canvas.expandToYonograph(params);
 	},500);
 };

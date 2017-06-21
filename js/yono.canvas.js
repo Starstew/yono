@@ -10,7 +10,9 @@ yono.canvas = (function(){
 		cvs_buffer1, // for self-referencing
 		ctx_buffer1, // context of copy
 		images_loaded = {},
-		yonograph_details = {};
+		yonograph_details = {},
+		yonograph_x,
+		yonograph_y;
 
 	var init = function(iobj) {
 		id_canvas_element = (iobj && iobj['id_canvas_element']) ? iobj.id_canvas_element : id_canvas_element;
@@ -20,7 +22,13 @@ yono.canvas = (function(){
 		ctx = cvs.getContext("2d");
 
 		cvs_buffer1 = document.getElementById(id_canvas_buffer1);
+		cvs_buffer1.width = cvs.width;
+		cvs_buffer1.height = cvs.height;
 		ctx_buffer1 = cvs_buffer1.getContext("2d");
+
+		yonograph_x = (cvs.width/2)-(nodesize/2);
+		yonograph_y = (cvs.height/2)-(nodesize/2);
+
 	};
 
 	var loadImages = function(id_array) {
@@ -42,8 +50,8 @@ yono.canvas = (function(){
 			w = nshalf,
 			h = nshalf;
 
-		x = x || 300,
-		y = y || 300,
+		x = x || yonograph_x,
+		y = y || yonograph_y,
 
 		tgt_cvs = tgt_cvs || cvs; // use default cvs if none passed
 		tgt_ctx = tgt_cvs.getContext("2d");
@@ -174,46 +182,31 @@ yono.canvas = (function(){
 		}
 	};
 
-	var animateToYonograph = function(yid) {
-		var set = yono.data.getAncestorSet(yid,22);
+	var expandToYonograph = function(params) {
+		var depth = (params && params.depth) ? params.depth : 0,
+			delay = (params && params.delay) ? params.delay : 2000
+			yid = (params && params.yid) ? params.yid : "142_IZO";
+
+		var set = yono.data.getAncestorSet(yid,depth);
 		set.reverse();
 
 		var len = set.length;
 		for (var i=0; i<len; i++) {
 			setTimeout(function(nsid){
-				var nset = yono.data.getAncestorSet(nsid,22);
-				yono.canvas.drawYonograph(nset,250,250,$("#"+id_canvas_buffer1)[0]);
+				var nset = yono.data.getAncestorSet(nsid,100);
+				yono.canvas.drawYonograph(nset,yonograph_x,yonograph_y,$("#"+id_canvas_buffer1)[0]);
 				var dir = nset[0].split;
-				var easing = [0.4, 0.7, 1.0, 0.9, 1.0];
+				var easing = [-0.1, 0.4, 0.7, 1.05, 0.95, 1.0];
 				var len = easing.length;
 				for (var i=0;i<len;i++) {
-					var interval = i * 100;
+					var interval = i * 75;
 					var amt = easing[i];
 					setTimeout(function(i){
 						yono.canvas.drawYonographProgression(dir,i);
 					},interval,amt);
 				}
-			},3000*i,set[i].id);
+			},delay*i,set[i].id);
 		}
-/*
-var dir = "v";
-		//var set = yono.data.getAncestorSet("073_OED",22); dir = "h";
-		var set = yono.data.getAncestorSet("170_AJP",22); dir = "v";
-		yono.canvas.drawYonograph(set,250,250,$("#yono_canvas_buffer1")[0]);//yset,x,y,tgt_cvs
-		setTimeout(function (){
-			//yono.canvas.bufferCanvas();
-			var easing = [0.4, 0.7, 1.0, 0.9, 1.0];
-			var len = easing.length;
-			for (var i=0;i<len;i++) {
-				var interval = i * 100;
-				var amt = easing[i];
-				setTimeout(function(i){
-					yono.canvas.drawYonographProgression(dir,i);
-					$("#yono_canvas").show();
-				},interval,amt);
-			}
-		},3000);
-*/
 	};
 
 	p = {
@@ -222,7 +215,7 @@ var dir = "v";
 		drawYonograph:drawYonograph,
 		bufferCanvas:bufferCanvas,
 		drawYonographProgression:drawYonographProgression,
-		animateToYonograph:animateToYonograph
+		expandToYonograph:expandToYonograph
 	};
 	return p;
 }());
