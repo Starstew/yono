@@ -93,7 +93,6 @@ yono.canvas = (function(){
 			}
 		}
 		yonograph_details = {x:x,y:y,w:ch*nodesize,h:cv*nodesize};
-		//cacheCanvas();
 	};
 
 	var drawImageSplitToCanvas = function(img,params,tgt_cvs) {
@@ -195,6 +194,15 @@ yono.canvas = (function(){
 		navstate_yid = nsyid;
 	};
 
+	var getNavState = function() {
+		var ns = {
+			is_collapsible: true,
+			is_expandable_vert: yono.data.pHash[navstate_yid].vert != "",
+			is_expandable_horz: yono.data.pHash[navstate_yid].horz != ""
+		};
+		return(ns);
+	};
+
 	var expandCurrentYonode = function(is_vert) {
 		var p = yono.data.pHash[navstate_yid];
 		var tyid = (is_vert) ? p.vert : p.horz;
@@ -216,7 +224,8 @@ yono.canvas = (function(){
 		var depth = (params && params.depth) ? params.depth : 0,
 			delay = (params && params.delay) ? params.delay : 2000
 			yid = (params && params.yid) ? params.yid : "142_IZO";
-		navstate_yid = yid;
+		setNavStateYonoId(yid);
+		//navstate_yid = yid;
 		var set = yono.data.getAncestorSet(yid,depth);
 		set.reverse();
 
@@ -243,7 +252,8 @@ yono.canvas = (function(){
 		var depth = (params && params.depth) ? params.depth : 0,
 			delay = (params && params.delay) ? params.delay : 2000
 			yid = (params && params.yid) ? params.yid : "142_IZO";
-		navstate_yid = yono.data.pHash[yid].parent;
+		setNavStateYonoId(yono.data.pHash[yid].parent)
+		//navstate_yid = yono.data.pHash[yid].parent;
 		var set = yono.data.getAncestorSet(yid,depth);
 
 		var len = set.length;
@@ -274,7 +284,8 @@ yono.canvas = (function(){
 		expandToYonograph:expandToYonograph,
 		expandCurrentYonode:expandCurrentYonode,
 		collapseCurrentYonode:collapseCurrentYonode,
-		setNavStateYonoId:setNavStateYonoId
+		setNavStateYonoId:setNavStateYonoId,
+		getNavState:getNavState
 	};
 	return p;
 }());
