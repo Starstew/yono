@@ -234,6 +234,10 @@
 	}
 	#nav_controls button {
 		display: inline-block;
+		cursor: pointer;
+	}
+	#nav_controls button:disabled {
+		cursor: not-allowed;
 	}
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
