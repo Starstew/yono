@@ -228,9 +228,21 @@
 	}
 
 /* canvas controls */
-	#yono_canvas {
+	#display_canvas_holder {
 		border: 1px dotted #aaa;
 		background-color:#111;
+		position: relative;
+		width: 900px;
+		height: 600px;
+	}
+	#yono_canvas,
+	#yono_canvas_overlay {
+		position: absolute;
+		left: 0px;
+		top: 0px;
+	}
+	#yono_canvas_overlay {
+		pointer-events: none;
 	}
 	#nav_controls {
 		margin: auto;

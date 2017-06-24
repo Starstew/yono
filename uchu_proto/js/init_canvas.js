@@ -1,3 +1,5 @@
+var ocvs,
+	octx;
 /* init canvas */
 $(function(){
 	yono.data.init({"jsonData":uchuDataJson}); // for local environment
@@ -22,6 +24,10 @@ $(function(){
 	$("#yono_canvas").on("mousemove", function(e){
 		handleCanvasMouse(e);
 	});
+
+	// overlay test
+	ocvs = $("#yono_canvas_overlay")[0];
+	octx = ocvs.getContext("2d");
 });
 yono.data.jsonDataLoadComplete = function() {
 	var pst = yono.data.getPiecesSortedBySubtime();
@@ -65,23 +71,32 @@ var handleCanvasMouse= function(e) {
 	var pt = {x:e.offsetX,y:e.offsetY};
 	var is_hexpand = isInBox(lbx,pt) || isInBox(rbx,pt);
 	var is_vexpand = isInBox(tbx,pt) || isInBox(bbx,pt);
+	var is_overcurrent = isInBox({x:hw-nodehalf,y:hh-nodehalf,w:ns.nodesize,h:ns.nodesize},pt);
 	
 	if (e.type == "click") {
 		if (is_hexpand) {
 			yono.canvas.expandCurrentYonode();
 		} else if (is_vexpand) {
 			yono.canvas.expandCurrentYonode(true);
-		} else {
+		} else if (is_overcurrent) {
 			yono.canvas.collapseCurrentYonode();
 		}
 	} else if (e.type = "mousemove") {
+		octx.clearRect(0, 0, ocvs.width, ocvs.height);
+		if (is_overcurrent || is_hexpand || is_vexpand) {
+			var ooff = 2;
+			octx.strokeStyle = "#fff";
+			octx.lineWidth = ooff;
+			octx.strokeRect(hw-nodehalf-ooff+1,hh-nodehalf-ooff+1,ns.nodesize+(ooff*2)-1,ns.nodesize+(ooff*2)-1);
+		}
 		if (is_hexpand && ns.is_expandable_horz) {
-			$(c).css("cursor","ew-resize");
+			$(c).css("cursor","col-resize");
 		} else if (is_vexpand && ns.is_expandable_vert) {
-			$(c).css("cursor","ns-resize");
+			$(c).css("cursor","row-resize");
+		} else if (is_overcurrent) {
+			$(c).css("cursor","cell");
 		} else {
 			$(c).css("cursor","default");
 		}
 	}
-	
 };
