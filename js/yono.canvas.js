@@ -196,7 +196,8 @@ yono.canvas = (function(){
 		var ns = {
 			is_collapsible: true,
 			is_expandable_vert: yono.data.pHash[navstate_yid].vert != "",
-			is_expandable_horz: yono.data.pHash[navstate_yid].horz != ""
+			is_expandable_horz: yono.data.pHash[navstate_yid].horz != "",
+			nodesize: nodesize
 		};
 		return(ns);
 	};
