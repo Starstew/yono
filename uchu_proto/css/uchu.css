@@ -228,6 +228,10 @@
 	}
 
 /* canvas controls */
+	#yono_canvas {
+		border: 1px dotted #aaa;
+		background-color:#111;
+	}
 	#nav_controls {
 		margin: auto;
 		text-align: center;

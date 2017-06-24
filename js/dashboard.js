@@ -19,9 +19,9 @@ function initDashboard(iobj) {
 	}
 	
 	$.getJSON(jsonUrl, function(json) {
-	    jsonObj = json;
-	    
-	    buildPiecesList();
+		jsonObj = json;
+
+		buildPiecesList();
 		buildArtistsList();
 	});
 }

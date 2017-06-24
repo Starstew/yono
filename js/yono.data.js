@@ -22,7 +22,6 @@ yono.data = (function(){
 				this.jsonPath = (iobj['jsonPath'] != undefined) ? iobj['jsonPath'] : jsonPath;
 			}
 		}
-	
 		this.loadJsonData();
 	};
 
