@@ -1,7 +1,7 @@
 yono.canvas = (function(){
 	var p = {},
 		pieces_path_base = "./pieceImgs/",
-		pieces_set = "2X",
+		pieces_set = "2x",
 		pieces_path = pieces_path_base + "/" + pieces_set + "/",
 		id_canvas_element = "yono_canvas",
 		id_canvas_buffer1 = "yono_canvas_buffer1",
@@ -20,10 +20,10 @@ yono.canvas = (function(){
 		navstate_yid;
 
 	var init = function(iobj) {
-		pieces_set = (iobj && iobj.pieces_set) ? iobj.pieces_set : "2X";
-		if (pieces_set == "2X" || pieces_set == "4X") {
+		pieces_set = (iobj && iobj.pieces_set) ? iobj.pieces_set : "2x";
+		if (pieces_set == "2x" || pieces_set == "4x") {
 			pieces_path = pieces_path_base + pieces_set + "/";
-			nodesize = (pieces_set == "2X") ? 128 : 256;
+			nodesize = (pieces_set == "2x") ? 128 : 256;
 		} else {
 			nodesize = 64;
 		}
