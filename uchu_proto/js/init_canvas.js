@@ -35,7 +35,7 @@ yono.data.jsonDataLoadComplete = function() {
 	for (var i=0;i<pst.length;i++) {
 		img_arr.push(pst[i]);
 	}
-	yono.canvas.init({"pieces_set":"2X"});
+	yono.canvas.init({"pieces_set":"2x"});
 	yono.canvas.loadImages(img_arr);
 	setTimeout(function(){
 		var params = {yid:"045_OED",depth:2,speed:1000};
