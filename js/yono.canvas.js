@@ -11,6 +11,8 @@ yono.canvas = (function(){
 		ctx, // context
 		cvs_buffer1, // for self-referencing
 		ctx_buffer1, // context of copy
+		buffer_offset_x,
+		buffer_offset_y,
 		images_loaded = {},
 		yonograph_details = {},
 		yonograph_x,
@@ -31,14 +33,19 @@ yono.canvas = (function(){
 		// init canvas
 		cvs = document.getElementById(id_canvas_element);
 		ctx = cvs.getContext("2d");
+		ctx.imageSmoothingEnabled = false;
 
 		cvs_buffer1 = document.getElementById(id_canvas_buffer1);
-		cvs_buffer1.width = cvs.width;
-		cvs_buffer1.height = cvs.height;
+		cvs_buffer1.width = cvs.width*2;
+		cvs_buffer1.height = cvs.height*2;
 		ctx_buffer1 = cvs_buffer1.getContext("2d");
+		ctx_buffer1.imageSmoothingEnabled = false;
 
 		yonograph_x = (cvs.width/2)-(nodesize/2);
 		yonograph_y = (cvs.height/2)-(nodesize/2);
+
+		buffer_offset_x = cvs.width/2;
+		buffer_offset_y = cvs.height/2;
 	};
 
 	var loadImages = function(id_array) {
@@ -55,22 +62,24 @@ yono.canvas = (function(){
 		return images_loaded[id];
 	};
 
-	var drawYonograph = function(yset,x,y,tgt_cvs) {
+	var drawYonograph = function(yset, x, y, to_buffer) {
 		var nshalf = nodesize/2,
 			w = nshalf,
-			h = nshalf;
+			h = nshalf,
+			tgt_cvs = (to_buffer) ? cvs_buffer1 : cvs; // use display cvs if not straight-to-buffer
 
-		x = x || yonograph_x,
-		y = y || yonograph_y,
+		x = x || yonograph_x;
+		y = y || yonograph_y;
 
-		tgt_cvs = tgt_cvs || cvs; // use default cvs if none passed
 		tgt_ctx = tgt_cvs.getContext("2d");
 		tgt_ctx.clearRect(0, 0, tgt_cvs.width, tgt_cvs.height);
 
 		yonograph_details = {x:0,y:0,w:0,h:0};
 
 		var cv = 1,
-			ch = 1;
+			ch = 1,
+			ox = (to_buffer)?buffer_offset_x:0,
+			oy = (to_buffer)?buffer_offset_y:0;
 		for (var i=0;i<yset.length;i++) {
 			var yid = yset[i].id,
 				img = getImageFromId(yid),
@@ -78,7 +87,7 @@ yono.canvas = (function(){
 			cv+=(spl=="v")?1:0;
 			ch+=(spl=="h")?1:0;
 			if (i==0) {
-				drawImageToCanvas(img,x,y,tgt_cvs);
+				drawImageToCanvas(img,x+ox,y+oy,tgt_cvs);
 			} else {
 				var params = {};
 				if (yset[i-1].split == "h") {
@@ -88,7 +97,7 @@ yono.canvas = (function(){
 					y -= nshalf;
 					h += nodesize;
 				}
-				params = {x:x,y:y,width:w,height:h};
+				params = {x:x+ox,y:y+oy,width:w,height:h};
 				drawImageSplitToCanvas(img,params,tgt_cvs);
 			}
 		}
@@ -112,28 +121,17 @@ yono.canvas = (function(){
 		tgt_ctx.drawImage(img,0,nshalf,nshalf,nshalf,x,y+h,nshalf,nshalf); 			//sw
 	};
 
-	var bufferCanvas = function(f_cvs,t_cvs) {
-		f_cvs = f_cvs || cvs;
-		t_cvs = t_cvs || cvs_buffer1;
-
-		t_cvs.width = f_cvs.width;
-		t_cvs.height = f_cvs.height;
-
-		t_ctx = t_cvs.getContext('2d');
-		t_ctx.clearRect(0,0,t_cvs.width,t_cvs.height);
-		t_ctx.drawImage(f_cvs,0,0);
-	};
-
 	/*
 		- assumes the "target" image has already been drawn to hidden canvas 
 		- [offset] is factor of nodesize (1=nodesize)
 		- [dir] is either "v" of "h"
 	*/
-	var drawYonographProgression = function(dir,offset,f_cvs) {
+	var drawYonographProgression = function(dir,offset) {
 		dir = dir || "v";
 		offset = (offset != null) ? offset : 1;
 
-		f_cvs = f_cvs || cvs_buffer1;
+		var f_cvs = cvs_buffer1;
+		var t_cvs = cvs;
 		var t_ctx = ctx;
 
 		// we need the x,y,w,h of the last drawn yonograph
@@ -177,9 +175,9 @@ yono.canvas = (function(){
 			t2y = cy;
 		}
 
-		t_ctx.clearRect(0, 0, f_cvs.width, f_cvs.height);
-		t_ctx.drawImage(f_cvs, x, y, tw, th, t1x, t1y, tw, th);
-		t_ctx.drawImage(f_cvs, s2x, s2y, tw, th, t2x, t2y, tw, th);
+		t_ctx.clearRect(0, 0, t_cvs.width, t_cvs.height);
+		t_ctx.drawImage(f_cvs, x+buffer_offset_x, y+buffer_offset_y, tw, th, t1x, t1y, tw, th);
+		t_ctx.drawImage(f_cvs, s2x+buffer_offset_x, s2y+buffer_offset_y, tw, th, t2x, t2y, tw, th);
 	};
 
 	var drawImageToCanvas = function(img,x,y,tgt_cvs) {
@@ -225,7 +223,6 @@ yono.canvas = (function(){
 			delay = (params && params.delay) ? params.delay : 2000
 			yid = (params && params.yid) ? params.yid : "142_IZO";
 		setNavStateYonoId(yid);
-		//navstate_yid = yid;
 		var set = yono.data.getAncestorSet(yid,depth);
 		set.reverse();
 
@@ -233,7 +230,7 @@ yono.canvas = (function(){
 		for (var i=0; i<len; i++) {
 			setTimeout(function(nsid){
 				var nset = yono.data.getAncestorSet(nsid,100);
-				yono.canvas.drawYonograph(nset,yonograph_x,yonograph_y,$("#"+id_canvas_buffer1)[0]);
+				yono.canvas.drawYonograph(nset,yonograph_x,yonograph_y,true);
 				var dir = nset[0].split;
 				var easing = [-0.1, 0.4, 0.7, 1.05, 0.95, 1.0];
 				var len = easing.length;
@@ -252,15 +249,14 @@ yono.canvas = (function(){
 		var depth = (params && params.depth) ? params.depth : 0,
 			delay = (params && params.delay) ? params.delay : 2000
 			yid = (params && params.yid) ? params.yid : "142_IZO";
-		setNavStateYonoId(yono.data.pHash[yid].parent)
-		//navstate_yid = yono.data.pHash[yid].parent;
+		setNavStateYonoId(yono.data.pHash[yid].parent);
 		var set = yono.data.getAncestorSet(yid,depth);
 
 		var len = set.length;
 		for (var i=0; i<len; i++) {
 			setTimeout(function(nsid){
 				var nset = yono.data.getAncestorSet(nsid,100);
-				yono.canvas.drawYonograph(nset,yonograph_x,yonograph_y,$("#"+id_canvas_buffer1)[0]);
+				yono.canvas.drawYonograph(nset,yonograph_x,yonograph_y,true);
 				var dir = nset[0].split;
 				var easing = [1.1, 0.6, 0.3, -0.05, 0.05, 0];
 				var len = easing.length;
@@ -279,7 +275,6 @@ yono.canvas = (function(){
 		init:init,
 		loadImages:loadImages,
 		drawYonograph:drawYonograph,
-		bufferCanvas:bufferCanvas,
 		drawYonographProgression:drawYonographProgression,
 		expandToYonograph:expandToYonograph,
 		expandCurrentYonode:expandCurrentYonode,

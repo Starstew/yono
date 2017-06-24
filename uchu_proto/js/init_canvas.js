@@ -27,7 +27,6 @@ yono.data.jsonDataLoadComplete = function() {
 	yono.canvas.loadImages(img_arr);
 	setTimeout(function(){
 		var params = {yid:"045_OED",depth:2,speed:1000};
-		//yono.canvas.expandToYonograph(params);
 		yono.canvas.drawYonograph(yono.data.getAncestorSet("045_OED",100));
 		yono.canvas.setNavStateYonoId("045_OED");
 		updateUiState();
