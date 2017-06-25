@@ -74,9 +74,9 @@ var handleCanvasMouse= function(e) {
 	var is_overcurrent = isInBox({x:hw-nodehalf,y:hh-nodehalf,w:ns.nodesize,h:ns.nodesize},pt);
 	
 	if (e.type == "click") {
-		if (is_hexpand) {
+		if (is_hexpand && ns.is_expandable_horz) {
 			yono.canvas.expandCurrentYonode();
-		} else if (is_vexpand) {
+		} else if (is_vexpand && ns.is_expandable_vert) {
 			yono.canvas.expandCurrentYonode(true);
 		} else if (is_overcurrent) {
 			yono.canvas.collapseCurrentYonode();
