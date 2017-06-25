@@ -1,7 +1,17 @@
 var ocvs,
-	octx;
+	octx,
+	cvs;
 /* init canvas */
 $(function(){
+	cvs = $("#yono_canvas");
+	ocvs = $("#yono_canvas_overlay")[0];
+	octx = ocvs.getContext("2d");
+	var ch = Math.min($("body").height(),450) + "px";
+	var cw = $("body").width() + "px";
+	cvs.attr("width",cw).attr("height",ch);
+	$(ocvs).attr("width",cw).attr("height",ch);
+	$("#display_canvas_holder").css("height",ch).css("width",cw);
+
 	yono.data.init({"jsonData":uchuDataJson}); // for local environment
 	// yono.data.init({"jsonPath":"uchuData.json"}); // for server environment
 
@@ -18,16 +28,12 @@ $(function(){
 		yono.canvas.collapseCurrentYonode();
 		updateUiState();
 	});
-	$("#yono_canvas").on("click", function(e){
+	cvs.on("click", function(e){
 		handleCanvasMouse(e);
 	});
-	$("#yono_canvas").on("mousemove", function(e){
+	cvs.on("mousemove", function(e){
 		handleCanvasMouse(e);
 	});
-
-	// overlay test
-	ocvs = $("#yono_canvas_overlay")[0];
-	octx = ocvs.getContext("2d");
 });
 yono.data.jsonDataLoadComplete = function() {
 	var pst = yono.data.getPiecesSortedBySubtime();

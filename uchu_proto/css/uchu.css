@@ -232,8 +232,8 @@
 		border: 1px dotted #aaa;
 		background-color:#111;
 		position: relative;
-		width: 900px;
-		height: 600px;
+		width: 100%;
+		padding: 0px;
 	}
 	#yono_canvas,
 	#yono_canvas_overlay {
