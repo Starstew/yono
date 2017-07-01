@@ -37,8 +37,7 @@ function buildArtistsList() {
 }
 
 function buildPiecesList() {
-	var pieces = getPiecesListFromRaw();
-	pieces.reverse();
+	var pieces = getPiecesListFromRaw().sort(yono.data.sortBySubtime).reverse();
 	for (var i = 0; i < pieces.length; i++) {
 		var p = pieces[i];
 		var id = p["id"];
@@ -87,7 +86,7 @@ function getPiecesListFromRaw() {
 		var art = rp["artist"];
 		var pid = rp["parentid"];
 		var spl = rp["split"];
-		//var ip = (rp["ip"] == 1);
+		var st = rp["subtime"];
 		var ip = rp["subtime"] == undefined;
 		var yonograph = (rp["yonograph"] == 1);
 		
@@ -106,6 +105,7 @@ function getPiecesListFromRaw() {
 		phash[id]["id"] = id;
 		phash[id]["ip"] = ip;
 		phash[id]["yonograph"] = yonograph;
+		phash[id]["subtime"] = st;
 		
 		// set hash info for PARENT piece
 		if (spl == "h") {
