@@ -1,0 +1,2 @@
+[build]
+  publish = "./uchu_proto"  # If your HTML files are in the root
