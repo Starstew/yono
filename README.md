@@ -1,7 +1,6 @@
 # Yono
 Folding and branching collaborative art framework developed for SITO.org
 
-Explore the nested pixel-arts at http://sitoorg.github.io/yono/uchu_proto/index.html
 
 ## What it is
 Yono is a collaborative art project to which artists contribute 64x64 pixel art squares (we call them *yonodes*) that build 
@@ -19,6 +18,3 @@ and quickly perusing open slots.
 
 The goal here is to create a modular and easy-to-use library so anyone who is interested can run their own Yono instance
 (I call them *uchus*). The first commits are definitely not modular, but they work. 
-
-
-
